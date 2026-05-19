@@ -1,0 +1,12 @@
+C:\Users\ADMIN\source\repos\ql_quan_ao\ql_quan_ao\bin\Debug\ql_quan_ao.exe.config
+C:\Users\ADMIN\source\repos\ql_quan_ao\ql_quan_ao\bin\Debug\ql_quan_ao.exe
+C:\Users\ADMIN\source\repos\ql_quan_ao\ql_quan_ao\bin\Debug\ql_quan_ao.pdb
+C:\Users\ADMIN\source\repos\ql_quan_ao\ql_quan_ao\obj\Debug\ql_quan_ao.csproj.AssemblyReference.cache
+C:\Users\ADMIN\source\repos\ql_quan_ao\ql_quan_ao\obj\Debug\ql_quan_ao.Form1.resources
+C:\Users\ADMIN\source\repos\ql_quan_ao\ql_quan_ao\obj\Debug\ql_quan_ao.Properties.Resources.resources
+C:\Users\ADMIN\source\repos\ql_quan_ao\ql_quan_ao\obj\Debug\ql_quan_ao.csproj.GenerateResource.cache
+C:\Users\ADMIN\source\repos\ql_quan_ao\ql_quan_ao\obj\Debug\ql_quan_ao.csproj.CoreCompileInputs.cache
+C:\Users\ADMIN\source\repos\ql_quan_ao\ql_quan_ao\obj\Debug\ql_quan_ao.exe
+C:\Users\ADMIN\source\repos\ql_quan_ao\ql_quan_ao\obj\Debug\ql_quan_ao.pdb
+C:\Users\ADMIN\source\repos\ql_quan_ao\ql_quan_ao\bin\Debug\FontAwesome.Sharp.dll
+C:\Users\ADMIN\source\repos\ql_quan_ao\ql_quan_ao\obj\Debug\ql_quan_ao.csproj.Up2Date
