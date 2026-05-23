@@ -38,9 +38,7 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
-    </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -56,8 +54,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BUS\HoaDonBUS.cs" />
+    <Compile Include="BUS\SanPhamBUS.cs" />
     <Compile Include="DAL\DatabaseConnect.cs" />
+    <Compile Include="DAL\DbConnection.cs" />
     <Compile Include="DAL\HoaDonDAL.cs" />
+    <Compile Include="DAL\SanPhamDAL.cs" />
     <Compile Include="GUI\Forms\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +167,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
