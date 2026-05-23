@@ -1,13 +1,12 @@
-using DAL;
 using System.Data;
-using System.Runtime.Remoting.Messaging;
+using DAL;
 
-
+// Ép về đúng cụm từ 'namespace BUS' để ăn khớp với lệnh gọi 'using BUS;' trên FormMain và ucQuanLyKho
 namespace BUS
 {
     public class SanPhamBUS
     {
-        SanPhamDAL dal = new SanPhamDAL();
+        private SanPhamDAL dal = new SanPhamDAL();
 
         public DataTable LayDanhSachSanPham()
         {
@@ -16,9 +15,10 @@ namespace BUS
 
         public bool ThemSanPham(string tenSP, int soLuong, decimal giaNhap, decimal giaBan)
         {
-            if (soLuong < 0 || giaNhap < 0 || giaBan < 0)
+            if (string.IsNullOrEmpty(tenSP) || soLuong < 0 || giaNhap < 0 || giaBan < 0)
+            {
                 return false;
-
+            }
             return dal.Insert(tenSP, soLuong, giaNhap, giaBan);
         }
     }

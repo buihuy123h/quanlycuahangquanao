@@ -61,7 +61,7 @@ namespace ql_quan_ao.GUI.UserControls
             flpDanhSachSP.Controls.Clear();
 
             // Query lấy sản phẩm
-            string query = "SELECT MaSP, TenSP, GiaBan, SoLuongTon, AnhSP FROM SanPham"; ;
+            string query = "SELECT MaSP, TenSP, GiaBan, SoLuongTon, AnhSP FROM SanPham";
 
             // Lấy dữ liệu
             DataTable dtSanPham = db.ExecuteQuery(query);
