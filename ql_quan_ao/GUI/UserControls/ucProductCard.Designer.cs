@@ -45,6 +45,7 @@
             this.picAnhSP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picAnhSP.TabIndex = 0;
             this.picAnhSP.TabStop = false;
+            this.picAnhSP.Click += new System.EventHandler(this.picAnhSP_Click);
             // 
             // lblMaSP
             // 

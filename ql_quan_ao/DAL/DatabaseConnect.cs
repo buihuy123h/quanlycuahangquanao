@@ -5,11 +5,12 @@ using System.Windows.Forms; // Thêm thư viện này để hiển thị hộp t
 
 namespace ql_quan_ao.DAL
 {
-    public class DataConnection
+    public class DatabaseConnect
     {
         // Chuỗi kết nối bốc từ SQL Server Object Explorer của máy bạn
-        private string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;Command Timeout=30
-";
+        private string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;
+      Initial Catalog=QuanLyCuaHang;
+      Integrated Security=True";
 
         /// <summary>
         /// Hàm thực thi câu lệnh lấy dữ liệu (SELECT) an toàn với try...catch
