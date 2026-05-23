@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BUS;
 
 namespace ql_quan_ao
 {
@@ -56,7 +57,10 @@ namespace ql_quan_ao
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            SanPhamBUS bus = new SanPhamBUS();
+            var dt = bus.LayDanhSachSanPham();
 
+            MessageBox.Show("Số sản phẩm: " + dt.Rows.Count);
         }
         private void HienThiUserControl(UserControl uc)
         {
