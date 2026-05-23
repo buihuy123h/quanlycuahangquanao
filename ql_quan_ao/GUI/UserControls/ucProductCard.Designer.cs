@@ -40,8 +40,9 @@
             // 
             this.picAnhSP.Dock = System.Windows.Forms.DockStyle.Top;
             this.picAnhSP.Location = new System.Drawing.Point(0, 0);
+            this.picAnhSP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.picAnhSP.Name = "picAnhSP";
-            this.picAnhSP.Size = new System.Drawing.Size(120, 111);
+            this.picAnhSP.Size = new System.Drawing.Size(90, 90);
             this.picAnhSP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picAnhSP.TabIndex = 0;
             this.picAnhSP.TabStop = false;
@@ -51,9 +52,10 @@
             // 
             this.lblMaSP.AutoSize = true;
             this.lblMaSP.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblMaSP.Location = new System.Drawing.Point(0, 111);
+            this.lblMaSP.Location = new System.Drawing.Point(0, 90);
+            this.lblMaSP.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMaSP.Name = "lblMaSP";
-            this.lblMaSP.Size = new System.Drawing.Size(46, 16);
+            this.lblMaSP.Size = new System.Drawing.Size(39, 13);
             this.lblMaSP.TabIndex = 1;
             this.lblMaSP.Text = "SP001";
             // 
@@ -62,9 +64,10 @@
             this.lblTenSP.AutoSize = true;
             this.lblTenSP.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblTenSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTenSP.Location = new System.Drawing.Point(0, 127);
+            this.lblTenSP.Location = new System.Drawing.Point(0, 103);
+            this.lblTenSP.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTenSP.Name = "lblTenSP";
-            this.lblTenSP.Size = new System.Drawing.Size(147, 18);
+            this.lblTenSP.Size = new System.Drawing.Size(125, 15);
             this.lblTenSP.TabIndex = 2;
             this.lblTenSP.Text = "Áo thun nam basic";
             // 
@@ -74,9 +77,10 @@
             this.lblGiaBan.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblGiaBan.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGiaBan.ForeColor = System.Drawing.Color.Blue;
-            this.lblGiaBan.Location = new System.Drawing.Point(0, 145);
+            this.lblGiaBan.Location = new System.Drawing.Point(0, 118);
+            this.lblGiaBan.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGiaBan.Name = "lblGiaBan";
-            this.lblGiaBan.Size = new System.Drawing.Size(76, 18);
+            this.lblGiaBan.Size = new System.Drawing.Size(67, 15);
             this.lblGiaBan.TabIndex = 3;
             this.lblGiaBan.Text = "200.000đ";
             // 
@@ -84,23 +88,25 @@
             // 
             this.lblTonKho.AutoSize = true;
             this.lblTonKho.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTonKho.Location = new System.Drawing.Point(0, 163);
+            this.lblTonKho.Location = new System.Drawing.Point(0, 133);
+            this.lblTonKho.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTonKho.Name = "lblTonKho";
-            this.lblTonKho.Size = new System.Drawing.Size(48, 16);
+            this.lblTonKho.Size = new System.Drawing.Size(41, 13);
             this.lblTonKho.TabIndex = 4;
             this.lblTonKho.Text = "Tồn:25";
             // 
             // ucProductCard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lblTonKho);
             this.Controls.Add(this.lblGiaBan);
             this.Controls.Add(this.lblTenSP);
             this.Controls.Add(this.lblMaSP);
             this.Controls.Add(this.picAnhSP);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ucProductCard";
-            this.Size = new System.Drawing.Size(120, 180);
+            this.Size = new System.Drawing.Size(90, 146);
             ((System.ComponentModel.ISupportInitialize)(this.picAnhSP)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
