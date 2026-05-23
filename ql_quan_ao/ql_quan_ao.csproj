@@ -55,6 +55,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\DatabaseConnect.cs" />
     <Compile Include="GUI\Forms\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +92,12 @@
     <Compile Include="GUI\UserControls\ucLichSuBanHang.Designer.cs">
       <DependentUpon>ucLichSuBanHang.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\UserControls\ucProductCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UserControls\ucProductCard.Designer.cs">
+      <DependentUpon>ucProductCard.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\UserControls\ucQuanLyKho.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -123,6 +130,9 @@
     <EmbeddedResource Include="GUI\UserControls\ucLichSuBanHang.resx">
       <DependentUpon>ucLichSuBanHang.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UserControls\ucProductCard.resx">
+      <DependentUpon>ucProductCard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\UserControls\ucQuanLyKho.resx">
       <DependentUpon>ucQuanLyKho.cs</DependentUpon>
     </EmbeddedResource>
@@ -154,7 +164,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BUS\" />
-    <Folder Include="DAL\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
