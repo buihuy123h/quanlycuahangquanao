@@ -37,11 +37,16 @@ namespace ql_quan_ao.GUI.UserControls
             GanSuKienChonSize();
             GanSuKienChonMau();
             GanSuKienTangGiamSoLuong();
+
+            // Khởi tạo tiền hóa đơn về 0 ban đầu
+            GanSuKienTinhTienHoaDon();
+
+            // Đăng ký sự kiện click chuột trực tiếp vào các ô (Nút Xóa dòng) trên lưới giỏ hàng
+            dataGridView1.CellContentClick += DataGridView1_CellContentClick;
         }
 
         #region XỬ LÝ SỰ KIỆN CHỌN THÔNG SỐ (SIZE, MÀU, SỐ LƯỢNG)
 
-        // 1. Xử lý đổi màu khi chọn Size
         private void GanSuKienChonSize()
         {
             Button[] dsButtonSize = { button12, button13, button14, button15 };
@@ -49,61 +54,49 @@ namespace ql_quan_ao.GUI.UserControls
             {
                 btn.Click += (s, e) =>
                 {
-                    // Trả lại màu nền trắng cho tất cả các nút size
                     foreach (Button b in dsButtonSize)
                     {
                         b.BackColor = Color.White;
                         b.ForeColor = Color.Black;
                     }
-
-                    // Đổi màu nút được chọn sang màu xanh làm điểm nhấn
                     btn.BackColor = Color.DodgerBlue;
                     btn.ForeColor = Color.White;
-                    sizeDuocChon = btn.Text; // Lưu lại size vừa chọn
+                    sizeDuocChon = btn.Text;
                 };
             }
         }
 
-        // 2. Xử lý đổi màu viền khi chọn Màu sắc
         private void GanSuKienChonMau()
         {
             Panel[] dsPanelMau = { panel3, panel4, panel5, panel6 };
             foreach (Panel pnl in dsPanelMau)
             {
-                // Tìm Label chứa tên màu nằm trong panel đó
                 Label lblColorName = pnl.Controls.OfType<Label>().FirstOrDefault();
                 PictureBox picCircle = pnl.Controls.OfType<PictureBox>().FirstOrDefault();
 
                 EventHandler colorSelectEvent = (s, e) =>
                 {
-                    // Trả lại nền trong suốt cho tất cả panel màu
                     foreach (Panel p in dsPanelMau) p.BackColor = Color.Transparent;
-
-                    // Đổi màu nền panel được chọn sang xanh nhạt để làm nổi bật
                     pnl.BackColor = Color.LightSkyBlue;
 
                     if (lblColorName != null)
                     {
-                        mauDuocChon = lblColorName.Text; // Lưu lại màu vừa chọn
+                        mauDuocChon = lblColorName.Text;
                     }
                 };
 
-                // Gán sự kiện click cho cả Panel, Label và PictureBox để click vào đâu cũng nhận
                 pnl.Click += colorSelectEvent;
                 if (lblColorName != null) lblColorName.Click += colorSelectEvent;
                 if (picCircle != null) picCircle.Click += colorSelectEvent;
             }
         }
 
-        // 3. Tăng giảm số lượng và tự động tính tiền
         private void GanSuKienTangGiamSoLuong()
         {
-            // Thiết lập giá trị mặc định ban đầu cho ô số lượng
             textBox2.Text = soLuongMua.ToString();
             textBox2.TextAlign = HorizontalAlignment.Center;
-            textBox3.ReadOnly = true; // Không cho người dùng tự sửa ô thành tiền
+            textBox3.ReadOnly = true;
 
-            // Nút Giảm (-)
             button16.Click += (s, e) =>
             {
                 if (soLuongMua > 1)
@@ -113,7 +106,6 @@ namespace ql_quan_ao.GUI.UserControls
                 }
             };
 
-            // Nút Tăng (+)
             button17.Click += (s, e) =>
             {
                 if (soLuongMua < maxTonKho)
@@ -127,7 +119,6 @@ namespace ql_quan_ao.GUI.UserControls
                 }
             };
 
-            // Người dùng tự gõ vào ô số lượng
             textBox2.TextChanged += (s, e) =>
             {
                 if (int.TryParse(textBox2.Text, out int result))
@@ -150,7 +141,6 @@ namespace ql_quan_ao.GUI.UserControls
 
         private void CapNhatSoLuongVaTinhTien()
         {
-            // Tránh vòng lặp vô hạn khi gán text
             if (textBox2.Text != soLuongMua.ToString())
             {
                 textBox2.Text = soLuongMua.ToString();
@@ -160,7 +150,6 @@ namespace ql_quan_ao.GUI.UserControls
             textBox3.Text = thanhTien.ToString("#,##0") + "đ";
         }
 
-        // Reset lại trạng thái các nút chọn thông số khi đổi sang sản phẩm khác
         private void ResetThongSoChon()
         {
             sizeDuocChon = "";
@@ -168,7 +157,6 @@ namespace ql_quan_ao.GUI.UserControls
             soLuongMua = 1;
             textBox2.Text = "1";
 
-            // Reset màu nút Size
             Button[] dsButtonSize = { button12, button13, button14, button15 };
             foreach (Button b in dsButtonSize)
             {
@@ -176,14 +164,13 @@ namespace ql_quan_ao.GUI.UserControls
                 b.ForeColor = Color.Black;
             }
 
-            // Reset màu ô Màu sắc
             Panel[] dsPanelMau = { panel3, panel4, panel5, panel6 };
             foreach (Panel p in dsPanelMau) p.BackColor = Color.Transparent;
         }
 
         #endregion
 
-        // TỐI ƯU: Đọc dữ liệu ngầm dưới nền, giúp giao diện không bị đơ cứng khi tải sản phẩm
+        // Tải danh sách sản phẩm lên FlowLayoutPanel dưới nền ngầm
         private async void HienThiTatCaSanPham()
         {
             try
@@ -193,9 +180,7 @@ namespace ql_quan_ao.GUI.UserControls
 
                 string query = "SELECT MaSP, TenSP, GiaBan, SoLuongTon, AnhSP FROM SanPham";
 
-                DataTable dtSanPham = await Task.Run(() => {
-                    return db.ExecuteQuery(query);
-                });
+                DataTable dtSanPham = await Task.Run(() => { return db.ExecuteQuery(query); });
 
                 if (dtSanPham == null || dtSanPham.Rows.Count == 0) return;
 
@@ -212,23 +197,18 @@ namespace ql_quan_ao.GUI.UserControls
 
                     card.SanPhamSelected += (sender, maSanPhamDuocChon) =>
                     {
-                        // Khôi phục trạng thái nút chọn khi chuyển sản phẩm
                         ResetThongSoChon();
 
-                        // Lưu thông tin vào biến toàn cục để tính toán tiền và kiểm tra tồn kho
                         giaHienTai = giaBan;
                         maxTonKho = soLuongTon;
 
-                        // Đổ dữ liệu chi tiết
                         lblChiTietMaSP.Text = "Mã SP: " + maSanPhamDuocChon;
                         lblChiTietTenSP.Text = tenSP;
                         lblChiTietGia.Text = giaBan.ToString("#,##0") + "đ";
                         lblChiTietTon.Text = "Tồn kho: " + soLuongTon;
 
-                        // Tính tiền lượt đầu tiên
                         CapNhatSoLuongVaTinhTien();
 
-                        // Load ảnh sản phẩm
                         try
                         {
                             if (!string.IsNullOrEmpty(anhSP))
@@ -262,8 +242,8 @@ namespace ql_quan_ao.GUI.UserControls
             }
         }
 
-        // Sự kiện click nút THÊM VÀO GIỎ HÀNG (button18)
-        private void button18_Click(object sender, EventArgs e)
+        // CHỨC NĂNG CHÍNH: SỰ KIỆN CLICK NÚT THÊM VÀO GIỎ HÀNG (ĐÃ ĐỔI TÊN ĐỂ SỬA LỖI DESIGNER)
+        private void button18_Click_1(object sender, EventArgs e)
         {
             if (giaHienTai == 0)
             {
@@ -281,17 +261,127 @@ namespace ql_quan_ao.GUI.UserControls
                 return;
             }
 
-            // Thực hiện hành động thêm vào Giỏ hàng tại đây (ví dụ thông báo thành công)
-            string thongTinDonHang = $"Đã thêm thành công vào giỏ hàng:\n" +
-                                     $"- {lblChiTietTenSP.Text}\n" +
-                                     $"- Size: {sizeDuocChon} | Màu: {mauDuocChon}\n" +
-                                     $"- Số lượng: {soLuongMua}\n" +
-                                     $"- Tổng tiền: {textBox3.Text}";
+            // Xử lý chuỗi lấy mã SP nguyên bản
+            string maSP = lblChiTietMaSP.Text.Replace("Mã SP:", "").Replace("Mã SP :", "").Trim();
+            string tenSP = lblChiTietTenSP.Text;
+            string phanLoaiMoi = $"{sizeDuocChon} - {mauDuocChon}";
 
-            MessageBox.Show(thongTinDonHang, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            bool isTrung = false;
 
-            // TODO: Viết tiếp code thêm sản phẩm này vào DataGridView giỏ hàng của bạn ở panelRight...
+            // Kiểm tra trùng: Duyệt tìm trên DataGridView theo đúng cột Chỉ số / Tên ô thiết kế
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                // Sử dụng vị trí index của cột để tuyệt đối chính xác, không sợ lỗi gõ sai tên ô:
+                // Cột 1 (Index 1) luôn luôn là Mã Sản Phẩm theo danh sách cột bạn mới cập nhật
+                if (row.Cells[1].Value == null) continue;
+
+                string maTrongBang = row.Cells[1].Value.ToString().Trim();
+                string phanLoaiTrongBang = row.Cells[3].Value?.ToString() ?? ""; // Cột 3 (Index 3): Phân Loại
+
+                if (maTrongBang == maSP && phanLoaiTrongBang == phanLoaiMoi)
+                {
+                    int slHienTai = Convert.ToInt32(row.Cells[4].Value); // Cột 4 (Index 4): Số lượng
+                    int slMoi = slHienTai + soLuongMua;
+
+                    if (slMoi > maxTonKho)
+                    {
+                        MessageBox.Show($"Không thể thêm! Số lượng vượt quá lượng tồn kho thực tế ({maxTonKho}).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    row.Cells[4].Value = slMoi;
+                    row.Cells[6].Value = slMoi * giaHienTai; // Cột 6 (Index 6): Thành Tiền
+                    isTrung = true;
+                    break;
+                }
+            }
+
+            // Nếu sản phẩm này CHƯA CÓ trong giỏ hàng
+            if (!isTrung)
+            {
+                int stt = dataGridView1.Rows.Count; // STT thuần túy tăng dần làm chỉ mục index
+                decimal thanhTien = soLuongMua * giaHienTai;
+
+                // Nạp mảng dữ liệu khớp 100% thứ tự 8 cột bạn tự dựng trên WinForms Designer:
+                // STT(0) | Mã Sản Phẩm(1) | SanPham(2) | Phân Loại(3) | Số lượng(4) | Đơn Giá(5) | Thành Tiền(6) | Thao Tác(7)
+                dataGridView1.Rows.Add(stt, maSP, tenSP, phanLoaiMoi, soLuongMua, giaHienTai, thanhTien, "Xóa");
+            }
+
+            TinhTongTienHoaDon();
         }
+
+        #region XỬ LÝ TÍNH TOÁN TIỀN HÓA ĐƠN VÀ SỐ THỨ TỰ INDEX TỰ ĐỘNG
+
+        private void GanSuKienTinhTienHoaDon()
+        {
+            txtGiamGia.Text = "0";
+            txtGiamGia.TextChanged += (s, e) => TinhTongTienHoaDon();
+        }
+
+        private void TinhTongTienHoaDon()
+        {
+            decimal tongTienHang = 0;
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells[6].Value != null) // Index 6: Thành Tiền
+                {
+                    tongTienHang += Convert.ToDecimal(row.Cells[6].Value);
+                }
+            }
+
+            decimal giamGia = 0;
+            if (!decimal.TryParse(txtGiamGia.Text, out giamGia)) { giamGia = 0; }
+
+            decimal khachThanhToan = tongTienHang - giamGia;
+            if (khachThanhToan < 0) khachThanhToan = 0;
+
+            lblTongTienHang.Text = tongTienHang.ToString("#,##0") + "đ";
+            lblTongTienGioHang.Text ="Tổng Tiền :" + tongTienHang.ToString("#,##0") + "đ";
+            lblKhachThanhToan.Text = khachThanhToan.ToString("#,##0") + "đ";
+        }
+
+        // Bấm nút xóa toàn bộ giỏ hàng sạch sẽ
+        private void btnXoaTatCa_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count > 0)
+            {
+                DialogResult dr = MessageBox.Show("Bạn có chắc chắn muốn xóa toàn bộ giỏ hàng?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes)
+                {
+                    dataGridView1.Rows.Clear();
+                    TinhTongTienHoaDon();
+                }
+            }
+        }
+
+        // RE-INDEX: Sắp xếp, đánh số lại cột STT tự động chạy từ 1, 2, 3... sau khi xóa bớt hàng
+        private void CapNhatLaiSTT()
+        {
+            int index = 1;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells[1].Value != null) // Nếu dòng có chứa Mã sản phẩm
+                {
+                    row.Cells[0].Value = index; // Gán lại số thứ tự tăng dần vào cột thứ 0 (STT)
+                    index++;
+                }
+            }
+        }
+
+        // SỰ KIỆN XÓA TỪNG MÓN HÀNG: Khi người dùng nhấn nút chữ "Xóa" ở cột cuối cùng
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Kiểm tra xem hàng được chọn có hợp lệ và cột click vào có phải là cột Thao Tác (Index số 7) không
+            if (e.RowIndex >= 0 && e.ColumnIndex == 7)
+            {
+                dataGridView1.Rows.RemoveAt(e.RowIndex); // Tiến hành xóa dòng này khỏi giỏ hàng
+                CapNhatLaiSTT();                         // Đánh lại số thứ tự index 1, 2, 3... mượt mà
+                TinhTongTienHoaDon();                    // Cập nhật lại hóa đơn tính tổng tiền
+            }
+        }
+
+        #endregion
 
         private void ucBanHang_Load(object sender, EventArgs e)
         {
@@ -313,5 +403,6 @@ namespace ql_quan_ao.GUI.UserControls
         private void pnlMiddle_Paint(object sender, PaintEventArgs e) { }
         private void flpDanhSachSP_Paint(object sender, PaintEventArgs e) { }
         private void label3_Click(object sender, EventArgs e) { }
+        private void tableLayoutPanel6_Paint(object sender, PaintEventArgs e) { }
     }
 }
