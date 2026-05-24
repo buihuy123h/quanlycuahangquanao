@@ -1,8 +1,9 @@
-﻿using System;
+﻿using BUS; // Đảm bảo project đã tham chiếu tới Project BUS
+using ql_quan_ao.GUI.UserControls;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using BUS; // Đảm bảo project đã tham chiếu tới Project BUS
 
 namespace ql_quan_ao
 {
@@ -84,12 +85,62 @@ namespace ql_quan_ao
                 }
             }
         }
+        // 1. Sự kiện Click vào bảng để đổ dữ liệu sang ô nhập liệu
+        // Biến tạm để lưu thông tin dòng đang chọn
+        private string selectedMaSP = "";
+        private int selectedSoLuongTon = 0;
+
+        private void dgvSanPham_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvSanPham.Rows[e.RowIndex];
+
+                // Lưu thông tin vào biến tạm để dùng khi nhấn "Xác nhận nhập kho"
+                selectedMaSP = row.Cells["MaSP"].Value.ToString();
+                selectedSoLuongTon = Convert.ToInt32(row.Cells["SoLuongTon"].Value);
+
+                // Thông báo cho người dùng biết đã chọn sản phẩm
+                // (Không cần gán vào ô bên trái vì giao diện không có)
+            }
+        }
+
+        
 
         // --- Các nút chức năng (Sẽ code chi tiết ở các bước sau) ---
         private void btnThem_Click(object sender, EventArgs e) { /* Code thêm mới */ }
         private void btnSua_Click(object sender, EventArgs e) { /* Code sửa */ }
         private void btnXoa_Click(object sender, EventArgs e) { /* Code xóa */ }
-        private void btnNhapKho_Click(object sender, EventArgs e) { /* Code nhập kho */ }
+        private void btnNhapKho_Click(object sender, EventArgs e)
+        {
+            if (dgvSanPham.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một sản phẩm trên bảng trước!");
+                return;
+            }
+
+            DataGridViewRow row = dgvSanPham.SelectedRows[0];
+
+            // CÁCH MỚI: Truy cập bằng Index thay vì Tên cột (Ví dụ: cột 0 là MaSP, cột 7 là SoLuongTon)
+            // Bạn hãy đếm xem trên lưới của bạn "MaSP" là cột thứ mấy (bắt đầu từ 0)
+            string maSP = row.Cells[0].Value.ToString();
+
+            // Tương tự, nếu SoLuongTon là cột thứ 7 (đếm từ trái sang, bắt đầu từ 0)
+            int slHienTai = Convert.ToInt32(row.Cells[7].Value);
+
+            FormNhapKho f = new FormNhapKho();
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                int slNhapThem = f.SoLuongNhap;
+                int slMoi = slHienTai + slNhapThem;
+
+                if (bus.CapNhatSoLuong(maSP, slMoi))
+                {
+                    MessageBox.Show("Nhập kho thành công!");
+                    LoadData();
+                }
+            }
+        }
 
         private void panel1_Paint(object sender, PaintEventArgs e) { }
     }

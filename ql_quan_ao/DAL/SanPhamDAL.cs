@@ -52,6 +52,7 @@ namespace DAL
             return db.ExecuteQuery(query);
         }
 
+
         /// <summary>
         /// Thêm mới sản phẩm vào kho sử dụng chuỗi kết nối Transaction của bạn
         /// </summary>
@@ -191,5 +192,28 @@ namespace DAL
                 }
             }
         }
-    }
+        // ... (các hàm có sẵn của bạn như Xoa_QLSP ở phía trên)
+
+        // CHÈN HÀM NÀY VÀO TRƯỚC DẤU ĐÓNG NGOẶC NHỌN CUỐI CÙNG CỦA CLASS
+        public bool ExecuteNonQuery(string query)
+        {
+            using (SqlConnection conn = new SqlConnection(db.GetConnectionString()))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    try
+                    {
+                        conn.Open();
+                        int result = cmd.ExecuteNonQuery();
+                        return result > 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Lỗi SQL: " + ex.Message);
+                        return false;
+                    }
+                }
+            }
+        }
+    } // Đây là dấu đóng ngoặc cuối cùng của class SanPhamDAL
 }

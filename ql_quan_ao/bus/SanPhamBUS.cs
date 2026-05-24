@@ -26,5 +26,11 @@ namespace BUS
             }
             return dal.Insert(tenSP, soLuong, giaNhap, giaBan);
         }
+        public bool CapNhatSoLuong(string maSP, int soLuongMoi)
+        {
+            // Giả sử lớp DAL của bạn có hàm ExecuteNonQuery
+            string query = "UPDATE SanPham SET SoLuongTon = " + soLuongMoi + " WHERE MaSP = '" + maSP + "'";
+            return dal.ExecuteNonQuery(query);
+        }
     }
 }
