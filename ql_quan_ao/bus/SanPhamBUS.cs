@@ -8,9 +8,14 @@ namespace BUS
     {
         private SanPhamDAL dal = new SanPhamDAL();
 
-        public DataTable LayDanhSachSanPham()
+            public DataTable LayDanhSachSanPham()
+            {
+                return dal.GetAll();
+            }
+
+        public DataTable LayDanhSachKhoHang()
         {
-            return dal.GetAll();
+            return dal.GetDanhSachKhoHang();
         }
 
         public bool ThemSanPham(string tenSP, int soLuong, decimal giaNhap, decimal giaBan)

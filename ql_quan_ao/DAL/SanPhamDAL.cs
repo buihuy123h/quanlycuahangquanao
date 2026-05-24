@@ -1,7 +1,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using ql_quan_ao.DAL; // Gọi đúng namespace chứa DatabaseConnect
+using ql_quan_ao.DAL; // Gọi đúng namespace chứa DatabaseConnect của dự án bạn
 
 namespace DAL
 {
@@ -11,12 +11,38 @@ namespace DAL
         private DatabaseConnect db = new DatabaseConnect();
 
         /// <summary>
-        /// Lấy danh sách sản phẩm bằng cách tận dụng hàm ExecuteQuery có sẵn try..catch an toàn của bạn
+        /// LẤY DANH SÁCH CHO BẠN BẠN (HÀM CŨ - GIỮ NGUYÊN ĐỂ BÁN HÀNG KHÔNG LỖI)
         /// </summary>
         public DataTable GetAll()
         {
             // Thêm TrangThai, HinhAnh, SoLuongTon để hiển thị mượt mà trên UI bán hàng và kho
             string query = "SELECT MaSP, TenSP, GiaBan, SoLuongTon, AnhSP FROM SanPham";
+            return db.ExecuteQuery(query);
+        }
+
+        /// <summary>
+        /// LẤY DANH SÁCH CHO BẠN (HÀM MỚI - ĐÃ ĐƯỢC THÊM VÀO ĐỂ ĐỦ CỘT ĐẶC TẢ KHO HÀNG)
+        /// </summary>
+        public DataTable GetDanhSachKhoHang()
+        {
+            // Câu lệnh SQL nâng cao: Tự đổi tên MaDM -> LoaiSP, tự tính toán TrangThai tự động
+            string query = @"SELECT 
+                                MaSP, 
+                                TenSP, 
+                                MaDM AS LoaiSP, 
+                                Size, 
+                                MauSac, 
+                                ISNULL(GiaNhap, 0.00) AS GiaNhap, 
+                                GiaBan, 
+                                SoLuongTon,
+                                CASE 
+                                    WHEN SoLuongTon > 0 THEN N'Còn hàng' 
+                                    ELSE N'Hết hàng' 
+                                END AS TrangThai,
+                                AnhSP
+                             FROM SanPham";
+
+            // Tận dụng hàm ExecuteQuery có sẵn cực kỳ an toàn của nhóm bạn
             return db.ExecuteQuery(query);
         }
 

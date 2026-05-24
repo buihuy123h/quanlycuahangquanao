@@ -8,9 +8,7 @@ namespace ql_quan_ao.DAL
     public class DatabaseConnect
     {
         // Chuỗi kết nối bốc từ SQL Server Object Explorer của máy bạn
-        private string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;
-      Initial Catalog=QuanLyCuaHang;
-      Integrated Security=True";
+        private string chuoiKetNoi = @"Data Source=localhost;Initial Catalog=QuanlyCuaHang;Integrated Security=True;Encrypt=False;";
 
         /// <summary>
         /// Hàm thực thi câu lệnh lấy dữ liệu (SELECT) an toàn với try...catch
