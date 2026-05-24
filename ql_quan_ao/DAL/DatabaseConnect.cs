@@ -11,6 +11,7 @@ namespace ql_quan_ao.DAL
 
         private string chuoiKetNoi = @"Data Source=localhost;Initial Catalog=QuanlyCuaHang;Integrated Security=True;Encrypt=False;";
         private string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=QuanLyCuaHang;Integrated Security=True;TrustServerCertificate=True;";
+        private string chuoiKetNoi = @"Data Source=localhost;Initial Catalog=QuanLyCuaHang;Integrated Security=True;TrustServerCertificate=True;";
 
 
         /// <summary>
