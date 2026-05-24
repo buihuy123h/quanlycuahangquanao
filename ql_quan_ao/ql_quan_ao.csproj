@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BUS\HoaDonBUS.cs" />
+    <Compile Include="BUS\QuanLySanPhamBUS.cs" />
     <Compile Include="BUS\SanPhamBUS.cs" />
     <Compile Include="DAL\DatabaseConnect.cs" />
     <Compile Include="DAL\HoaDonDAL.cs" />
