@@ -79,12 +79,6 @@
     <Compile Include="GUI\Forms\FormThongTinSanPham.Designer.cs">
       <DependentUpon>FormThongTinSanPham.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\UserControls\FormThongTinSanPham.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\UserControls\FormThongTinSanPham.Designer.cs">
-      <DependentUpon>FormThongTinSanPham.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\UserControls\ucBanHang.cs">
       <SubType>UserControl</SubType>
     </Compile>
