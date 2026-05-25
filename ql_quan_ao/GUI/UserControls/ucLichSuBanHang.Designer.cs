@@ -32,10 +32,11 @@
             // 
             // ucLichSuBanHang
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "ucLichSuBanHang";
-            this.Size = new System.Drawing.Size(1177, 677);
+            this.Size = new System.Drawing.Size(1324, 846);
             this.ResumeLayout(false);
 
         }
