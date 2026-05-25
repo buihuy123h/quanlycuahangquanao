@@ -38,9 +38,7 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
-    </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -55,6 +53,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BUS\HoaDonBUS.cs" />
+    <Compile Include="BUS\QuanLyKhachHangBus.cs" />
+    <Compile Include="BUS\QuanLySanPhamBUS.cs" />
+    <Compile Include="BUS\SanPhamBUS.cs" />
+    <Compile Include="DAL\DatabaseConnect.cs" />
+    <Compile Include="DAL\HoaDonDAL.cs" />
+    <Compile Include="DAL\KhachHangDAL.cs" />
+    <Compile Include="DAL\SanPhamDAL.cs" />
     <Compile Include="GUI\Forms\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +97,12 @@
     <Compile Include="GUI\UserControls\ucLichSuBanHang.Designer.cs">
       <DependentUpon>ucLichSuBanHang.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\UserControls\ucProductCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UserControls\ucProductCard.Designer.cs">
+      <DependentUpon>ucProductCard.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\UserControls\ucQuanLyKho.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -103,6 +115,8 @@
     <Compile Include="GUI\UserControls\ucQuanLySanPham.Designer.cs">
       <DependentUpon>ucQuanLySanPham.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChiTietHoaDonDTO.cs" />
+    <Compile Include="Models\HoaDonDTO.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Forms\FormMain.resx">
@@ -122,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UserControls\ucLichSuBanHang.resx">
       <DependentUpon>ucLichSuBanHang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UserControls\ucProductCard.resx">
+      <DependentUpon>ucProductCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UserControls\ucQuanLyKho.resx">
       <DependentUpon>ucQuanLyKho.cs</DependentUpon>
@@ -152,10 +169,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BUS\" />
-    <Folder Include="DAL\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
