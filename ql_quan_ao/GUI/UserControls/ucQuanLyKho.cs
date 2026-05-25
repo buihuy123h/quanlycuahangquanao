@@ -42,6 +42,13 @@ namespace ql_quan_ao
                 // Cấu hình hiển thị bảng
                 dgvSanPham.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 dgvSanPham.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+                // --- ĐỔI TÊN CỘT TẠI ĐÂY ---
+                // Bạn thay "LoaiSP" bằng tên cột thực tế mà thông báo MessageBox trước đó đã hiện cho bạn
+                if (dgvSanPham.Columns["LoaiSP"] != null)
+                {
+                    dgvSanPham.Columns["LoaiSP"].HeaderText = "MaDM";
+                }
             }
             catch (Exception ex)
             {
@@ -105,11 +112,70 @@ namespace ql_quan_ao
             }
         }
 
-        
+
 
         // --- Các nút chức năng (Sẽ code chi tiết ở các bước sau) ---
-        private void btnThem_Click(object sender, EventArgs e) { /* Code thêm mới */ }
-        private void btnSua_Click(object sender, EventArgs e) { /* Code sửa */ }
+
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            FormThongTinSanPham frm = new FormThongTinSanPham();
+
+            // Mở Form dưới dạng Dialog
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                // Sau khi lưu xong, load lại dữ liệu để bảng hiển thị sản phẩm mới
+                LoadDanhSachSanPham();
+            }
+        }
+
+        private void LoadDanhSachSanPham()
+        {
+            SanPhamBUS bus = new SanPhamBUS();
+            dgvSanPham.DataSource = bus.LayDanhSachSanPham();
+
+            // Thử đổi tên bằng index (Giả sử LoaiSP là cột đầu tiên - index 0)
+            // Nếu không phải cột đầu, hãy thay số 0 bằng vị trí đúng của nó
+            if (dgvSanPham.Columns.Count > 0)
+            {
+                dgvSanPham.Columns[0].HeaderText = "MaDM";
+            }
+            // Thêm tạm dòng này vào sau khi gán DataSource
+            MessageBox.Show("Cột đầu tiên là: " + dgvSanPham.Columns[0].Name);
+        }
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            // 1. Kiểm tra xem người dùng đã chọn dòng nào chưa
+            if (dgvSanPham.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một sản phẩm trong bảng để sửa!", "Thông báo");
+                return;
+            }
+
+            // 2. Lấy dữ liệu từ dòng đang chọn
+            DataGridViewRow row = dgvSanPham.SelectedRows[0];
+            // Thay vì dùng: row.Cells["MaSP"].Value.ToString();
+            // Hãy dùng:
+            string ma = row.Cells[0].Value.ToString();
+            string ten = row.Cells[1].Value.ToString();
+            string maDM = row.Cells[2].Value.ToString();
+            string size = row.Cells[3].Value.ToString();
+            string mau = row.Cells[4].Value.ToString();
+            string gia = row.Cells[5].Value.ToString();
+            // 3. Mở Form Thêm/Sửa
+            FormThongTinSanPham frm = new FormThongTinSanPham();
+
+            // Đánh dấu đây là chế độ Sửa (isAdding = false)
+            frm.ThietLapCheDo(false, row);
+
+            // Đổ dữ liệu vào Form (Bạn cần viết hàm LoadDuLieu trong Form)
+            frm.LoadDuLieu(ma, ten, maDM, size, mau, gia);
+
+            // 4. Nếu nhấn Lưu thành công thì load lại bảng
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                LoadData(); // Cập nhật lại giao diện bảng sau khi sửa
+            }
+        }
         private void btnXoa_Click(object sender, EventArgs e) { /* Code xóa */ }
         private void btnNhapKho_Click(object sender, EventArgs e)
         {
