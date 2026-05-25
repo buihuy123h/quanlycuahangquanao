@@ -67,6 +67,12 @@
     <Compile Include="GUI\Forms\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Forms\FormNhapKho.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\FormNhapKho.Designer.cs">
+      <DependentUpon>FormNhapKho.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\UserControls\ucBanHang.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -121,6 +127,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Forms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\FormNhapKho.resx">
+      <DependentUpon>FormNhapKho.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UserControls\ucBanHang.resx">
       <DependentUpon>ucBanHang.cs</DependentUpon>
