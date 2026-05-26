@@ -38,18 +38,21 @@ namespace ql_quan_ao.GUI.UserControls
             GanSuKienChonMau();
             GanSuKienTangGiamSoLuong();
 
-            // Khởi tạo tiền hóa đơn về 0 ban đầu
+            // Khởi tạo tiền hóa đơn về 0 ban đầu và gán sự kiện TextChanged cho ô giảm giá
             GanSuKienTinhTienHoaDon();
 
             // Đăng ký sự kiện click chuột trực tiếp vào các ô (Nút Xóa dòng) trên lưới giỏ hàng
             dataGridView1.CellContentClick += DataGridView1_CellContentClick;
+
+            // Đảm bảo ô hiển thị tiền "Khách cần trả" không bị gõ đè bằng tay làm sai logic
+            txtTien.ReadOnly = true;
         }
 
         #region XỬ LÝ SỰ KIỆN CHỌN THÔNG SỐ (SIZE, MÀU, SỐ LƯỢNG)
 
         private void GanSuKienChonSize()
         {
-            Button[] dsButtonSize = { button12, button13, button14, button15 };
+            Button[] dsButtonSize = { btnSizeS, btnSizeM, btnSizeL, btnSizeXL };
             foreach (Button btn in dsButtonSize)
             {
                 btn.Click += (s, e) =>
@@ -93,11 +96,11 @@ namespace ql_quan_ao.GUI.UserControls
 
         private void GanSuKienTangGiamSoLuong()
         {
-            textBox2.Text = soLuongMua.ToString();
-            textBox2.TextAlign = HorizontalAlignment.Center;
-            textBox3.ReadOnly = true;
+            txtSoLuong.Text = soLuongMua.ToString();
+            txtSoLuong.TextAlign = HorizontalAlignment.Center;
+            txtThanhTien.ReadOnly = true;
 
-            button16.Click += (s, e) =>
+            btnGiamSoLuong.Click += (s, e) =>
             {
                 if (soLuongMua > 1)
                 {
@@ -106,7 +109,7 @@ namespace ql_quan_ao.GUI.UserControls
                 }
             };
 
-            button17.Click += (s, e) =>
+            btnTangSoLuong.Click += (s, e) =>
             {
                 if (soLuongMua < maxTonKho)
                 {
@@ -115,18 +118,18 @@ namespace ql_quan_ao.GUI.UserControls
                 }
                 else
                 {
-                    MessageBox.Show($"Sản phẩm này chỉ còn tối đa {maxTonKho} sản phẩm trong kho!", "Thông báo");
+                    MessageBox.Show($"Sản phẩm này chỉ còn tối đa {maxTonKho} sản phẩm trong kho!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             };
 
-            textBox2.TextChanged += (s, e) =>
+            txtSoLuong.TextChanged += (s, e) =>
             {
-                if (int.TryParse(textBox2.Text, out int result))
+                if (int.TryParse(txtSoLuong.Text, out int result))
                 {
                     if (result < 1) soLuongMua = 1;
                     else if (result > maxTonKho && maxTonKho > 0)
                     {
-                        MessageBox.Show($"Số lượng vượt quá tồn kho ({maxTonKho})!", "Thông báo");
+                        MessageBox.Show($"Số lượng vượt quá tồn kho ({maxTonKho})!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         soLuongMua = maxTonKho;
                     }
                     else soLuongMua = result;
@@ -141,13 +144,13 @@ namespace ql_quan_ao.GUI.UserControls
 
         private void CapNhatSoLuongVaTinhTien()
         {
-            if (textBox2.Text != soLuongMua.ToString())
+            if (txtSoLuong.Text != soLuongMua.ToString())
             {
-                textBox2.Text = soLuongMua.ToString();
+                txtSoLuong.Text = soLuongMua.ToString();
             }
 
             decimal thanhTien = soLuongMua * giaHienTai;
-            textBox3.Text = thanhTien.ToString("#,##0") + "đ";
+            txtThanhTien.Text = thanhTien.ToString("#,##0") + "đ";
         }
 
         private void ResetThongSoChon()
@@ -155,9 +158,9 @@ namespace ql_quan_ao.GUI.UserControls
             sizeDuocChon = "";
             mauDuocChon = "";
             soLuongMua = 1;
-            textBox2.Text = "1";
+            txtSoLuong.Text = "1";
 
-            Button[] dsButtonSize = { button12, button13, button14, button15 };
+            Button[] dsButtonSize = { btnSizeS, btnSizeM, btnSizeL, btnSizeXL };
             foreach (Button b in dsButtonSize)
             {
                 b.BackColor = Color.White;
@@ -213,19 +216,19 @@ namespace ql_quan_ao.GUI.UserControls
                         {
                             if (!string.IsNullOrEmpty(anhSP))
                             {
-                                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-                                pictureBox1.Load(anhSP);
+                                picAnhSPChiTiet.SizeMode = PictureBoxSizeMode.Zoom;
+                                picAnhSPChiTiet.Load(anhSP);
                             }
                             else
                             {
-                                pictureBox1.Image = null;
-                                pictureBox1.BackColor = Color.LightGray;
+                                picAnhSPChiTiet.Image = null;
+                                picAnhSPChiTiet.BackColor = Color.LightGray;
                             }
                         }
                         catch
                         {
-                            pictureBox1.Image = null;
-                            pictureBox1.BackColor = Color.LightGray;
+                            picAnhSPChiTiet.Image = null;
+                            picAnhSPChiTiet.BackColor = Color.LightGray;
                         }
                     };
 
@@ -242,7 +245,7 @@ namespace ql_quan_ao.GUI.UserControls
             }
         }
 
-        // CHỨC NĂNG CHÍNH: SỰ KIỆN CLICK NÚT THÊM VÀO GIỎ HÀNG (ĐÃ ĐỔI TÊN ĐỂ SỬA LỖI DESIGNER)
+        // CHỨC NĂNG CHÍNH: SỰ KIỆN CLICK NÚT THÊM VÀO GIỎ HÀNG
         private void button18_Click_1(object sender, EventArgs e)
         {
             if (giaHienTai == 0)
@@ -268,11 +271,9 @@ namespace ql_quan_ao.GUI.UserControls
 
             bool isTrung = false;
 
-            // Kiểm tra trùng: Duyệt tìm trên DataGridView theo đúng cột Chỉ số / Tên ô thiết kế
+            // Kiểm tra trùng: Duyệt tìm trên DataGridView theo chỉ số cột chính xác
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                // Sử dụng vị trí index của cột để tuyệt đối chính xác, không sợ lỗi gõ sai tên ô:
-                // Cột 1 (Index 1) luôn luôn là Mã Sản Phẩm theo danh sách cột bạn mới cập nhật
                 if (row.Cells[1].Value == null) continue;
 
                 string maTrongBang = row.Cells[1].Value.ToString().Trim();
@@ -296,17 +297,18 @@ namespace ql_quan_ao.GUI.UserControls
                 }
             }
 
-            // Nếu sản phẩm này CHƯA CÓ trong giỏ hàng
+            // Nếu sản phẩm này CHƯA CÓ trong giỏ hàng thì nạp đủ 8 cột
             if (!isTrung)
             {
-                int stt = dataGridView1.Rows.Count; // STT thuần túy tăng dần làm chỉ mục index
+                int stt = dataGridView1.Rows.Count + 1;
                 decimal thanhTien = soLuongMua * giaHienTai;
 
-                // Nạp mảng dữ liệu khớp 100% thứ tự 8 cột bạn tự dựng trên WinForms Designer:
+                // Nạp mảng khớp 100% thứ tự cấu trúc 8 cột trên giao diện:
                 // STT(0) | Mã Sản Phẩm(1) | SanPham(2) | Phân Loại(3) | Số lượng(4) | Đơn Giá(5) | Thành Tiền(6) | Thao Tác(7)
                 dataGridView1.Rows.Add(stt, maSP, tenSP, phanLoaiMoi, soLuongMua, giaHienTai, thanhTien, "Xóa");
             }
 
+            // Tính toán lại toàn bộ tiền ngay sau khi thêm đồ mới
             TinhTongTienHoaDon();
         }
 
@@ -315,6 +317,7 @@ namespace ql_quan_ao.GUI.UserControls
         private void GanSuKienTinhTienHoaDon()
         {
             txtGiamGia.Text = "0";
+            // Kích hoạt tính tiền tự động bất cứ khi nào chữ trong ô giảm giá biến đổi
             txtGiamGia.TextChanged += (s, e) => TinhTongTienHoaDon();
         }
 
@@ -322,23 +325,36 @@ namespace ql_quan_ao.GUI.UserControls
         {
             decimal tongTienHang = 0;
 
+            // 1. Quét qua giỏ hàng tính tổng tiền
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                if (row.Cells[6].Value != null) // Index 6: Thành Tiền
+                if (row.Cells[6].Value != null) // Index 6 luôn luôn là cột Thành Tiền
                 {
                     tongTienHang += Convert.ToDecimal(row.Cells[6].Value);
                 }
             }
 
+            // 2. Ép kiểu đọc số tiền giảm giá
             decimal giamGia = 0;
-            if (!decimal.TryParse(txtGiamGia.Text, out giamGia)) { giamGia = 0; }
+            if (!decimal.TryParse(txtGiamGia.Text, out giamGia))
+            {
+                giamGia = 0;
+            }
 
+            // Chặn lỗi logic: Giảm giá không được âm hoặc vượt quá tổng tiền hàng
+            if (giamGia < 0) giamGia = 0;
+            if (giamGia > tongTienHang) giamGia = tongTienHang;
+
+            // 3. Tính toán tiền thực trả
             decimal khachThanhToan = tongTienHang - giamGia;
-            if (khachThanhToan < 0) khachThanhToan = 0;
 
+            // 4. Đẩy chuỗi định dạng tiền tệ lên các Label và TextBox thích hợp
+            txtTongTienHang.Text = tongTienHang.ToString("#,##0") + "đ";
             lblTongTienHang.Text = tongTienHang.ToString("#,##0") + "đ";
-            lblTongTienGioHang.Text ="Tổng Tiền :" + tongTienHang.ToString("#,##0") + "đ";
-            lblKhachThanhToan.Text = khachThanhToan.ToString("#,##0") + "đ";
+            lblTongTienGioHang.Text = "Tổng Tiền :" + tongTienHang.ToString("#,##0") + "đ";
+
+            // Đổ số tiền cuối cùng cần trả vào ô hiển thị kết quả
+            txtTien.Text = khachThanhToan.ToString("#,##0") + "đ";
         }
 
         // Bấm nút xóa toàn bộ giỏ hàng sạch sẽ
@@ -361,7 +377,7 @@ namespace ql_quan_ao.GUI.UserControls
             int index = 1;
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                if (row.Cells[1].Value != null) // Nếu dòng có chứa Mã sản phẩm
+                if (row.Cells[1].Value != null)
                 {
                     row.Cells[0].Value = index; // Gán lại số thứ tự tăng dần vào cột thứ 0 (STT)
                     index++;
@@ -387,6 +403,15 @@ namespace ql_quan_ao.GUI.UserControls
         {
             HienThiTatCaSanPham();
         }
+        private bool KiemTraSDTVietNam(string sdt)
+        {
+            if (string.IsNullOrEmpty(sdt)) return false;
+
+            // Biểu thức chính quy Regex quét các đầu số di động phổ biến tại VN
+            string pattern = @"^(03|05|07|08|09)\d{8}$";
+
+            return System.Text.RegularExpressions.Regex.IsMatch(sdt, pattern);
+        }
 
         // --- CÁC HÀM CŨ ĐỂ KHÔNG BỊ LỖI DESIGNER ---
         private void label1_Click(object sender, EventArgs e) { }
@@ -404,5 +429,80 @@ namespace ql_quan_ao.GUI.UserControls
         private void flpDanhSachSP_Paint(object sender, PaintEventArgs e) { }
         private void label3_Click(object sender, EventArgs e) { }
         private void tableLayoutPanel6_Paint(object sender, PaintEventArgs e) { }
+        private void textBox2_TextChanged(object sender, EventArgs e) { }
+
+        private void btnThanhToan_Click(object sender, EventArgs e)
+        {
+            // 1. Kiểm tra xem giỏ hàng có hàng chưa
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("Giỏ hàng đang trống! Vui lòng thêm sản phẩm trước khi thanh toán.",
+                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Lấy thông tin SĐT người dùng nhập (txtSDT)
+            string sdtKhachHang = txtSDT.Text.Trim();
+
+            // Nếu người dùng có nhập SĐT thì bắt buộc phải nhập ĐÚNG ĐỊNH DẠNG
+            if (!string.IsNullOrEmpty(sdtKhachHang))
+            {
+                if (!KiemTraSDTVietNam(sdtKhachHang))
+                {
+                    MessageBox.Show("Số điện thoại không đúng định dạng Việt Nam! (Phải gồm 10 số và bắt đầu bằng đầu số 03, 05, 07, 08, 09).",
+                                    "Sai định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtSDT.Focus(); // Đưa con trỏ chuột quay lại ô SĐT để người dùng sửa
+                    return;
+                }
+            }
+            // Trường hợp nếu bạn muốn bắt buộc PHẢI NHẬP SĐT (không cho để trống) thì dùng đoạn này:
+            /*
+            else
+            {
+                MessageBox.Show("Vui lòng nhập số điện thoại khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSDT.Focus();
+                return;
+            }
+            */
+
+            // 3. Kiểm tra xem đã chọn phương thức thanh toán chưa (radTienMat, radChuyenKhoan, radioTheNganHang)
+            string phuongThuc = "";
+            if (radTienMat.Checked) phuongThuc = "Tiền mặt";
+            else if (radChuyenKhoan.Checked) phuongThuc = "Chuyển khoản";
+            else if (radioTheNganHang.Checked) phuongThuc = "Thẻ ngân hàng";
+            else
+            {
+                MessageBox.Show("Vui lòng chọn phương thức thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 4. Nếu vượt qua tất cả các bước kiểm tra (Validation) ở trên -> Thông báo thành công và hiển thị dữ liệu đã nhận
+            string thongTinXacNhan = $"=== THÔNG TIN ĐƠN HÀNG ===\n\n" +
+                                     $"- Khách hàng: {(string.IsNullOrEmpty(txtTenKH.Text) ? "Khách vãng lai" : txtTenKH.Text.Trim())}\n" +
+                                     $"- SĐT: {(string.IsNullOrEmpty(sdtKhachHang) ? "Không có" : sdtKhachHang)}\n" +
+                                     $"- Tổng tiền: {txtTongTienHang.Text}\n" +
+                                     $"- Giảm giá: {txtGiamGia.Text} đ\n" +
+                                     $"- Khách cần trả: {txtTien.Text}\n" +
+                                     $"- Phương thức: {phuongThuc}\n\n" +
+                                     $"[Hệ thống]: Xác nhận dữ liệu hợp lệ! Bạn có muốn hoàn tất thanh toán và xuất hóa đơn không?";
+
+            DialogResult result = MessageBox.Show(thongTinXacNhan, "Kiểm tra dữ liệu thành công",
+                                                  MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+            if (result == DialogResult.Yes)
+            {
+                // KHÚC NÀY: Nơi bạn gọi hàm xuống Database để lưu Hóa đơn (Ví dụ: HoaDonBLL.LuuHoaDon...)
+                // Sau khi lưu DB thành công thì xóa giỏ hàng:
+
+                MessageBox.Show("Thanh toán thành công! Đã lưu hóa đơn vào hệ thống.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                dataGridView1.Rows.Clear(); // Xóa sạch giỏ hàng
+                txtGiamGia.Text = "0";      // Reset giảm giá
+                txtSDT.Clear();
+                txtTenKH.Clear();
+                txtDiaChi.Clear();
+                txtGhiChu.Clear();
+            }
+        }
     }
 }

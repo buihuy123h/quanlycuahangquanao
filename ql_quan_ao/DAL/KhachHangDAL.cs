@@ -7,7 +7,7 @@ namespace DAL
     public class KhachHangDAL
     {
         // Thêm cấu hình Connection Timeout=2 vào chuỗi kết nối để kiểm tra nhanh trong 2 giây
-        private readonly string connectionString = @"Data Source=localhost;Initial Catalog=QuanLyCuaHang;Integrated Security=True;TrustServerCertificate=True;Connection Timeout=2";
+        private readonly string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=QuanLyCuaHang;Integrated Security=True;TrustServerCertificate=True;";
 
         /// <summary>
         /// Lấy danh sách khách hàng hiển thị lên bảng dgvKhachHang
