@@ -24,21 +24,37 @@ namespace ql_quan_ao.GUI.Forms
 
         private void Form_ChiTietHoaDon_Load(object sender, EventArgs e)
         {
-            // Kiểm tra biến _maHD có giá trị hay không
-            if (string.IsNullOrEmpty(_maHD)) return;
-
-            // Câu lệnh SQL "trần trụi" để kiểm tra
-            string sql = "SELECT * FROM ChiTietHoaDon WHERE MaHD = '" + _maHD + "'";
-
-            // Gọi thực thi
+            string sql = "SELECT MaHD, MaSP, SoLuong, DonGia, ThanhTien FROM ChiTietHoaDon WHERE MaHD = '" + _maHD + "'";
             DataTable dt = DataProvider.Instance.ExecuteQuery(sql);
 
-            // BÁO CÁO KẾT QUẢ ĐỂ CHÚNG TA BIẾT LỖI Ở ĐÂU
-            MessageBox.Show("Số dòng lấy được từ CSDL: " + dt.Rows.Count);
+            // Ép buộc không tự sinh cột để dùng cấu hình bạn đã thiết kế trong Designer
+            dgvDanhSach.AutoGenerateColumns = false;
 
-            if (dt.Rows.Count > 0)
+            // Gán dữ liệu
+            dgvDanhSach.DataSource = dt;
+        }
+
+        private void dgvDanhSach_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvDanhSach_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvHoaDon_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Kiểm tra để tránh lỗi khi click vào Header (dòng tiêu đề)
+            if (e.RowIndex >= 0)
             {
-                dgvDanhSach.DataSource = dt;
+                // Lấy MaHD từ cột "MaHD"
+                string maHD = dgvDanhSach.Rows[e.RowIndex].Cells["MaHD"].Value.ToString();
+
+                // Mở Form chi tiết và truyền MaHD qua constructor
+                Form_ChiTietHoaDon f = new Form_ChiTietHoaDon(maHD);
+                f.ShowDialog();
             }
         }
     }

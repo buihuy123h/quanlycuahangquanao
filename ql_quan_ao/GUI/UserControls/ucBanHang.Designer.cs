@@ -675,10 +675,6 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
 
-            this.tableLayoutPanel3.Controls.Add(this.button15, 3, 0);
-            this.tableLayoutPanel3.Controls.Add(this.button13, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.button14, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.button12, 0, 0);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(18, 109);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 
@@ -698,15 +694,6 @@
             // btnSizeXL
             // 
 
-            this.button15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button15.Location = new System.Drawing.Point(240, 4);
-            this.button15.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(73, 54);
-            this.button15.TabIndex = 10;
-            this.button15.Text = "XL";
-            this.button15.UseVisualStyleBackColor = true;
 
             this.btnSizeXL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSizeXL.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -721,15 +708,6 @@
             // btnSizeM
             // 
 
-            this.button13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button13.Location = new System.Drawing.Point(82, 4);
-            this.button13.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(73, 54);
-            this.button13.TabIndex = 8;
-            this.button13.Text = "M";
-            this.button13.UseVisualStyleBackColor = true;
 
             this.btnSizeM.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSizeM.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -744,15 +722,6 @@
             // btnSizeL
             // 
 
-            this.button14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button14.Location = new System.Drawing.Point(161, 4);
-            this.button14.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(73, 54);
-            this.button14.TabIndex = 9;
-            this.button14.Text = "L";
-            this.button14.UseVisualStyleBackColor = true;
 
             this.btnSizeL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSizeL.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -767,15 +736,6 @@
             // btnSizeS
             // 
 
-            this.button12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button12.Location = new System.Drawing.Point(3, 4);
-            this.button12.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(73, 54);
-            this.button12.TabIndex = 7;
-            this.button12.Text = "S";
-            this.button12.UseVisualStyleBackColor = true;
 
             this.btnSizeS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSizeS.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -816,13 +776,7 @@
             // txtSoLuong
             // 
 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox2.Location = new System.Drawing.Point(58, 381);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(112, 26);
-            this.textBox2.TabIndex = 15;
-
+            
             this.txtSoLuong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtSoLuong.Location = new System.Drawing.Point(52, 304);
             this.txtSoLuong.Name = "txtSoLuong";
@@ -834,16 +788,7 @@
             // btnTangSoLuong
             // 
 
-            this.button17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button17.Location = new System.Drawing.Point(178, 381);
-            this.button17.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(34, 29);
-            this.button17.TabIndex = 14;
-            this.button17.Text = "+";
-            this.button17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button17.UseVisualStyleBackColor = true;
+            
 
             this.btnTangSoLuong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnTangSoLuong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -859,16 +804,6 @@
             // btnGiamSoLuong
             // 
 
-            this.button16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button16.Location = new System.Drawing.Point(21, 381);
-            this.button16.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(34, 29);
-            this.button16.TabIndex = 13;
-            this.button16.Text = "-";
-            this.button16.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button16.UseVisualStyleBackColor = true;
 
             this.btnGiamSoLuong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnGiamSoLuong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -896,19 +831,6 @@
             // btnThemVaoGioHang
             // 
 
-            this.button18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button18.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button18.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button18.Location = new System.Drawing.Point(-3, 85);
-            this.button18.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(408, 80);
-            this.button18.TabIndex = 2;
-            this.button18.Text = "THÊM VÀO GIỎ HÀNG";
-            this.button18.UseVisualStyleBackColor = false;
-            this.button18.Click += new System.EventHandler(this.button18_Click_1);
-
             this.btnThemVaoGioHang.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnThemVaoGioHang.BackColor = System.Drawing.Color.DodgerBlue;
             this.btnThemVaoGioHang.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -925,11 +847,6 @@
             // txtThanhTien
             // 
 
-            this.textBox3.Location = new System.Drawing.Point(120, 21);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(112, 26);
-            this.textBox3.TabIndex = 1;
 
             this.txtThanhTien.Location = new System.Drawing.Point(107, 17);
             this.txtThanhTien.Name = "txtThanhTien";
@@ -1018,13 +935,7 @@
             // picAnhSPChiTiet
             // 
 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(15, 5, 4, 5);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(194, 339);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+           
 
             this.picAnhSPChiTiet.Dock = System.Windows.Forms.DockStyle.Left;
             this.picAnhSPChiTiet.Location = new System.Drawing.Point(0, 0);
@@ -1185,14 +1096,6 @@
             // btnTimKhach
             // 
 
-            this.button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button19.Location = new System.Drawing.Point(169, 65);
-            this.button19.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(43, 41);
-            this.button19.TabIndex = 2;
-            this.button19.Text = "tìm";
-            this.button19.UseVisualStyleBackColor = true;
 
             this.btnTimKhach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnTimKhach.Location = new System.Drawing.Point(149, 60);
@@ -1207,15 +1110,6 @@
             // 
             this.txtSDT.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-
-            this.textBox4.Location = new System.Drawing.Point(7, 66);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(155, 39);
-            this.textBox4.TabIndex = 1;
-            this.textBox4.Text = "nhap sdt";
-            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 
             this.txtSDT.Location = new System.Drawing.Point(6, 60);
             this.txtSDT.Multiline = true;
@@ -1280,23 +1174,9 @@
             // 
             // lblTienThuaTraKhach
             // 
-            this.lblTienThuaTraKhach.AutoSize = true;
-            this.lblTienThuaTraKhach.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTienThuaTraKhach.Location = new System.Drawing.Point(3, 319);
-            this.lblTienThuaTraKhach.Name = "lblTienThuaTraKhach";
-            this.lblTienThuaTraKhach.Size = new System.Drawing.Size(169, 20);
-            this.lblTienThuaTraKhach.TabIndex = 4;
-            this.lblTienThuaTraKhach.Text = "Tiền thừa trả khách:";
             // 
             // lblKhachThanhToan
             // 
-            this.lblKhachThanhToan.AutoSize = true;
-            this.lblKhachThanhToan.Location = new System.Drawing.Point(3, 274);
-            this.lblKhachThanhToan.Name = "lblKhachThanhToan";
-            this.lblKhachThanhToan.Size = new System.Drawing.Size(139, 20);
-            this.lblKhachThanhToan.TabIndex = 3;
-            this.lblKhachThanhToan.Text = "Khách thanh toán:";
-
             this.btnThanhToan.Location = new System.Drawing.Point(3, 291);
             this.btnThanhToan.Name = "btnThanhToan";
             this.btnThanhToan.Size = new System.Drawing.Size(188, 44);
@@ -1362,17 +1242,6 @@
             this.groupBoxThanhToan.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 
-            this.groupBox1.Controls.Add(this.radioButton3);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(7, 40);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox1.Size = new System.Drawing.Size(206, 141);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Phương thức thanh toán";
 
             this.groupBoxThanhToan.Controls.Add(this.radioTheNganHang);
             this.groupBoxThanhToan.Controls.Add(this.radChuyenKhoan);
@@ -1388,15 +1257,6 @@
             // radioTheNganHang
             // 
 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(8, 99);
-            this.radioButton3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(141, 24);
-            this.radioButton3.TabIndex = 1;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Thẻ ngân hàng";
-            this.radioButton3.UseVisualStyleBackColor = true;
 
             this.radioTheNganHang.AutoSize = true;
             this.radioTheNganHang.Location = new System.Drawing.Point(7, 79);
@@ -1410,15 +1270,7 @@
             // radChuyenKhoan
             // 
 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(7, 66);
-            this.radioButton2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(136, 24);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Chuyển khoản";
-            this.radioButton2.UseVisualStyleBackColor = true;
+           
 
             this.radChuyenKhoan.AutoSize = true;
             this.radChuyenKhoan.Location = new System.Drawing.Point(6, 53);
@@ -1434,15 +1286,7 @@
             this.radTienMat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(8, 28);
-            this.radioButton1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(95, 24);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Tiền mặt";
-            this.radioButton1.UseVisualStyleBackColor = true;
+           
 
             this.radTienMat.AutoSize = true;
             this.radTienMat.Checked = true;
@@ -1458,12 +1302,7 @@
             // lblThanhToan
             // 
 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(124, 20);
-            this.label10.TabIndex = 0;
-            this.label10.Text = "5.THANH TOÁN";
+            
 
             this.lblThanhToan.AutoSize = true;
             this.lblThanhToan.Location = new System.Drawing.Point(3, 0);
