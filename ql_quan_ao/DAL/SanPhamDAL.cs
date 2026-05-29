@@ -1,7 +1,8 @@
+using ql_quan_ao.DAL; // Gọi đúng namespace chứa DatabaseConnect của dự án bạn
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using ql_quan_ao.DAL; // Gọi đúng namespace chứa DatabaseConnect của dự án bạn
+using System.Threading.Tasks;
 
 
 namespace DAL
@@ -18,18 +19,51 @@ namespace DAL
         // PHẦN 1: CODE CỦA BẠN BẠN (GIỮ NGUYÊN CHO TAB KHO/BÁN HÀNG)
         // ==========================================================
 
-
         public DataTable GetAll()
         {
             string query = "SELECT MaSP, TenSP, GiaBan, SoLuongTon, AnhSP FROM SanPham";
             return db.ExecuteQuery(query);
         }
 
+        public async Task<DataTable> GetSanPhamTheoLoaiDAL(string loaiSanPham)
+        {
+            DataTable dt = new DataTable();
 
-        /// <summary>
-        /// LẤY DANH SÁCH CHO BẠN (HÀM MỚI - ĐÃ ĐƯỢC THÊM VÀO ĐỂ ĐỦ CỘT ĐẶC TẢ KHO HÀNG)
-        /// </summary>
-        public DataTable GetDanhSachKhoHang()
+            // Lọc theo cột LoaiSP bằng tham số @LoaiSP
+            string query = "SELECT MaSP, TenSP, GiaBan, SoLuongTon, AnhSP " +
+                           "FROM SanPham WHERE TRIM(MaDM) = @LoaiSP";
+
+            using (SqlConnection conn = new SqlConnection(db.chuoiKetNoi))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@LoaiSP", loaiSanPham);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        try
+                        {
+                            // Mở kết nối bất đồng bộ
+                            await conn.OpenAsync();
+
+                            // Thực thi nạp dữ liệu (chạy trên thread riêng)
+                            await Task.Run(() => adapter.Fill(dt));
+                        }
+                        catch (Exception ex)
+                        {
+                            // Xử lý hoặc log lỗi tại đây nếu cần
+                            throw ex;
+                        }
+                    }
+                }
+            }
+            return dt;
+        }
+
+/// <summary>
+/// LẤY DANH SÁCH CHO BẠN (HÀM MỚI - ĐÃ ĐƯỢC THÊM VÀO ĐỂ ĐỦ CỘT ĐẶC TẢ KHO HÀNG)
+/// </summary>
+public DataTable GetDanhSachKhoHang()
         {
             // Câu lệnh SQL nâng cao: Tự đổi tên MaDM -> LoaiSP, tự tính toán TrangThai tự động
             string query = @"SELECT 
@@ -90,6 +124,8 @@ namespace DAL
                 return dt;
             }
         }
+
+        
         // --- Chèn hàm CapNhat này vào SanPhamDAL.cs ---
         public bool CapNhat(string maSP, string tenSP, string maDM, string size, string mauSac, decimal giaBan)
         {

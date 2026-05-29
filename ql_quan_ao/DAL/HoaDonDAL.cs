@@ -8,19 +8,24 @@ using System.Threading.Tasks;
 
 namespace ql_quan_ao.DAL
 {
-     public class HoaDonDAL
+    public class HoaDonDAL
     {
         private DatabaseConnect db = new DatabaseConnect();
 
         // TRUY VẤN 1: Lấy danh sách hóa đơn cho màn hình lịch sử
         public DataTable LayDanhSachHoaDon()
         {
-            string sql = @"SELECT MaHD as 'Mã Hóa Đơn', 
-                                  NgayLap as 'Ngày Lập', 
-                                  MaKH as 'Mã KH', 
-                                  TongTien as 'Tổng Tiền' 
-                           FROM HoaDon 
-                           ORDER BY NgayLap DESC";
+            string sql = @"
+        SELECT 
+            hd.MaHD as 'MaHoaDon',
+            hd.NgayLap as 'NgayLap',
+            kh.TenKH as 'TenKhachHang',
+            hd.TongTien as 'TongTien'
+        FROM HoaDon hd
+        JOIN KhachHang kh
+            ON hd.MaKH = kh.MaKH
+        ORDER BY hd.NgayLap DESC";
+
             return db.ExecuteQuery(sql);
         }
 

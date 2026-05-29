@@ -104,5 +104,20 @@ namespace ql_quan_ao.GUI.UserControls
                 this.BackColor = Color.LightGray;
             }
         }
+
+        private void lblTenSP_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblGiaBan_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblTonKho_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -1,4 +1,8 @@
-﻿using System;
+﻿using BUS;
+using DAL;
+using ql_quan_ao.BUS;
+using ql_quan_ao.DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,13 +11,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ql_quan_ao.DAL;
 
 namespace ql_quan_ao.GUI.UserControls
 {
     public partial class ucBanHang : UserControl
     {
         DatabaseConnect db = new DatabaseConnect();
+        SanPhamDAL sanPhamDAL = new SanPhamDAL();
+
+        // --- THÊM DÒNG NÀY ĐỂ ĐẠI DIỆN CHO TẦNG BUS ---
+        private SanPhamBUS sanPhamBUS = new SanPhamBUS();
 
         // Biến lưu trữ thông số đang được chọn
         private string sizeDuocChon = "";
@@ -417,7 +424,6 @@ namespace ql_quan_ao.GUI.UserControls
         private void label1_Click(object sender, EventArgs e) { }
         private void panelCenter_Paint(object sender, PaintEventArgs e) { }
         private void textBox1_TextChanged(object sender, EventArgs e) { }
-        private void button2_Click(object sender, EventArgs e) { }
         private void label1_Click_1(object sender, EventArgs e) { }
         private void button8_Click(object sender, EventArgs e) { }
         private void button7_Click(object sender, EventArgs e) { }
@@ -503,6 +509,143 @@ namespace ql_quan_ao.GUI.UserControls
                 txtDiaChi.Clear();
                 txtGhiChu.Clear();
             }
+        }
+
+        private void lblChiTietGia_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblChiTietTenSP_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblChiTietMaSP_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblGhiChu_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtGiamGia_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblTongTienHang_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblSDT_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public async Task sulylaysanphamtheoloai(string MaDM)
+        {
+            try
+            {
+                flpDanhSachSP.SuspendLayout();
+                flpDanhSachSP.Controls.Clear(); // Xóa sạch các card sản phẩm cũ trước đó
+
+                // GỌI QUA TẦNG BUS: Lấy danh sách sản phẩm có phân loại là "Áo"
+                // Sử dụng await giúp ứng dụng chạy mượt dưới nền ngầm, không gây đơ UI
+                DataTable dtSanPham = await sanPhamBUS.GetSanPhamTheoLoaiBUS(MaDM);
+
+                if (dtSanPham == null || dtSanPham.Rows.Count == 0)
+                {
+                    MessageBox.Show("Không tìm thấy sản phẩm nào thuộc nhóm Áo!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Duyệt qua từng dòng dữ liệu đổ về để dựng UserControl Card
+                foreach (DataRow row in dtSanPham.Rows)
+                {
+                    string maSP = row["MaSP"].ToString();
+                    string tenSP = row["TenSP"].ToString();
+                    decimal giaBan = Convert.ToDecimal(row["GiaBan"]);
+                    int soLuongTon = Convert.ToInt32(row["SoLuongTon"]);
+                    string anhSP = row["AnhSP"].ToString();
+
+                    ucProductCard card = new ucProductCard();
+                    card.ThietLapThongTin(maSP, tenSP, giaBan, soLuongTon, anhSP);
+
+                    // Gán sự kiện click chọn sản phẩm hiển thị chi tiết bên cánh phải (Giữ nguyên logic của bạn)
+                    card.SanPhamSelected += (senderCard, maSanPhamDuocChon) =>
+                    {
+                        ResetThongSoChon();
+
+                        giaHienTai = giaBan;
+                        maxTonKho = soLuongTon;
+
+                        lblChiTietMaSP.Text = "Mã SP: " + maSanPhamDuocChon;
+                        lblChiTietTenSP.Text = tenSP;
+                        lblChiTietGia.Text = giaBan.ToString("#,##0") + "đ";
+                        lblChiTietTon.Text = "Tồn kho: " + soLuongTon;
+
+                        CapNhatSoLuongVaTinhTien();
+
+                        try
+                        {
+                            if (!string.IsNullOrEmpty(anhSP))
+                            {
+                                picAnhSPChiTiet.SizeMode = PictureBoxSizeMode.Zoom;
+                                picAnhSPChiTiet.Load(anhSP);
+                            }
+                            else
+                            {
+                                picAnhSPChiTiet.Image = null;
+                                picAnhSPChiTiet.BackColor = Color.LightGray;
+                            }
+                        }
+                        catch
+                        {
+                            picAnhSPChiTiet.Image = null;
+                            picAnhSPChiTiet.BackColor = Color.LightGray;
+                        }
+                    };
+
+                    // Đưa card áo vừa tạo vào danh sách hiển thị công khai
+                    flpDanhSachSP.Controls.Add(card);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tải sản phẩm nhóm Áo: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                flpDanhSachSP.ResumeLayout();
+            }
+        }
+        private async void btnAo_Click(object sender, EventArgs e)
+        {
+            await sulylaysanphamtheoloai("DM01");
+        }
+
+        private async void btnQuan_Click(object sender, EventArgs e)
+        {
+            await sulylaysanphamtheoloai("DM02");
+        }
+
+        private async void btnVay_Click(object sender, EventArgs e)
+        {
+            await sulylaysanphamtheoloai("DM03");
+        }
+
+        private async void btnPhuKien_Click(object sender, EventArgs e)
+        {
+            await sulylaysanphamtheoloai("DM04");
+        }
+
+        private void btn_lay_tat_ca_SP(object sender, EventArgs e)
+        {
+            HienThiTatCaSanPham();
         }
     }
 }

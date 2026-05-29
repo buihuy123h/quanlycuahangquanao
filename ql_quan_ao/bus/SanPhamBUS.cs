@@ -1,5 +1,7 @@
-using System.Data;
 using DAL;
+using System.Data;
+using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 // Ép về đúng cụm từ 'namespace BUS' để ăn khớp với lệnh gọi 'using BUS;' trên FormMain và ucQuanLyKho
 namespace BUS
@@ -35,6 +37,10 @@ namespace BUS
         {
             // Gọi hàm DAL để UPDATE vào CSDL
             return dal.CapNhat(maSP, tenSP, maDM, size, mauSac, giaBan);
+        }
+        public async Task<DataTable> GetSanPhamTheoLoaiBUS(string maDM)
+        {
+            return await dal.GetSanPhamTheoLoaiDAL(maDM);
         }
     }
 }

@@ -2,11 +2,11 @@
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace QuanLyCuaHang.DAL // Đảm bảo trùng namespace với ThongKeDAL.cs
+namespace QuanLyCuaHang.DAL 
 {
     public class DataProvider
     {
-        // Chuỗi kết nối đến Database của bạn (Hãy thay đổi đoạn này cho khớp với máy bạn)
+        
         private string strConn = @"Data Source=localhost;Initial Catalog=QuanLyCuaHang;Integrated Security=True";
 
         private static DataProvider instance;
@@ -18,7 +18,6 @@ namespace QuanLyCuaHang.DAL // Đảm bảo trùng namespace với ThongKeDAL.cs
 
         private DataProvider() { }
 
-        // Hàm thực thi câu lệnh SQL trả về DataTable (Dùng cho SELECT)
         public DataTable ExecuteQuery(string query, object[] parameter = null)
         {
             DataTable data = new DataTable();

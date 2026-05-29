@@ -9,8 +9,8 @@ namespace ql_quan_ao.DAL
     {
         // Chuỗi kết nối bốc từ SQL Server Object Explorer của máy bạn
 
-        //private string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=QuanLyCuaHang;Integrated Security=True;TrustServerCertificate=True;";
-        private string chuoiKetNoi = @"Data Source=localhost;Initial Catalog=QuanLyCuaHang;Integrated Security=True;TrustServerCertificate=True;";
+        public string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=QuanLyCuaHang;Integrated Security=True;TrustServerCertificate=True;";
+        //private string chuoiKetNoi = @"Data Source=localhost;Initial Catalog=QuanLyCuaHang;Integrated Security=True;TrustServerCertificate=True;";
 
 
         /// <summary>

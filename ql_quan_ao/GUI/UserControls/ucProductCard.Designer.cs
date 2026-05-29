@@ -40,9 +40,9 @@
             // 
             this.picAnhSP.Dock = System.Windows.Forms.DockStyle.Top;
             this.picAnhSP.Location = new System.Drawing.Point(2, 2);
-            this.picAnhSP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.picAnhSP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.picAnhSP.Name = "picAnhSP";
-            this.picAnhSP.Size = new System.Drawing.Size(164, 140);
+            this.picAnhSP.Size = new System.Drawing.Size(121, 101);
             this.picAnhSP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picAnhSP.TabIndex = 0;
             this.picAnhSP.TabStop = false;
@@ -51,59 +51,58 @@
             // lblMaSP
             // 
             this.lblMaSP.AutoSize = true;
-            this.lblMaSP.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblMaSP.Location = new System.Drawing.Point(2, 142);
+            this.lblMaSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaSP.Location = new System.Drawing.Point(8, 109);
             this.lblMaSP.Name = "lblMaSP";
-            this.lblMaSP.Size = new System.Drawing.Size(46, 16);
+            this.lblMaSP.Size = new System.Drawing.Size(47, 15);
             this.lblMaSP.TabIndex = 1;
-            this.lblMaSP.Text = "SP001";
+            this.lblMaSP.Text = "label1";
             // 
             // lblTenSP
             // 
-            this.lblTenSP.AutoSize = true;
-            this.lblTenSP.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTenSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTenSP.Location = new System.Drawing.Point(2, 158);
+            this.lblTenSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTenSP.Location = new System.Drawing.Point(8, 128);
             this.lblTenSP.Name = "lblTenSP";
-            this.lblTenSP.Size = new System.Drawing.Size(147, 18);
+            this.lblTenSP.Size = new System.Drawing.Size(115, 43);
             this.lblTenSP.TabIndex = 2;
-            this.lblTenSP.Text = "Áo thun nam basic";
+            this.lblTenSP.Text = "label1";
             // 
             // lblGiaBan
             // 
             this.lblGiaBan.AutoSize = true;
-            this.lblGiaBan.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblGiaBan.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGiaBan.ForeColor = System.Drawing.Color.Blue;
-            this.lblGiaBan.Location = new System.Drawing.Point(2, 176);
+            this.lblGiaBan.Location = new System.Drawing.Point(8, 171);
             this.lblGiaBan.Name = "lblGiaBan";
-            this.lblGiaBan.Size = new System.Drawing.Size(76, 18);
+            this.lblGiaBan.Size = new System.Drawing.Size(47, 15);
             this.lblGiaBan.TabIndex = 3;
-            this.lblGiaBan.Text = "200.000đ";
+            this.lblGiaBan.Text = "label1";
+            this.lblGiaBan.Click += new System.EventHandler(this.lblGiaBan_Click);
             // 
             // lblTonKho
             // 
             this.lblTonKho.AutoSize = true;
-            this.lblTonKho.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTonKho.Location = new System.Drawing.Point(2, 194);
+            this.lblTonKho.ForeColor = System.Drawing.Color.Red;
+            this.lblTonKho.Location = new System.Drawing.Point(8, 190);
             this.lblTonKho.Name = "lblTonKho";
-            this.lblTonKho.Size = new System.Drawing.Size(48, 16);
+            this.lblTonKho.Size = new System.Drawing.Size(35, 13);
             this.lblTonKho.TabIndex = 4;
-            this.lblTonKho.Text = "Tồn:25";
+            this.lblTonKho.Text = "label1";
+            this.lblTonKho.Click += new System.EventHandler(this.lblTonKho_Click);
             // 
             // ucProductCard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lblTonKho);
             this.Controls.Add(this.lblGiaBan);
             this.Controls.Add(this.lblTenSP);
             this.Controls.Add(this.lblMaSP);
             this.Controls.Add(this.picAnhSP);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ucProductCard";
             this.Padding = new System.Windows.Forms.Padding(2);
-            this.Size = new System.Drawing.Size(168, 219);
+            this.Size = new System.Drawing.Size(125, 203);
             ((System.ComponentModel.ISupportInitialize)(this.picAnhSP)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
