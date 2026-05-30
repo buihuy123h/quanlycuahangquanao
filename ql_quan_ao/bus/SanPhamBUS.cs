@@ -42,5 +42,9 @@ namespace BUS
         {
             return await dal.GetSanPhamTheoLoaiDAL(maDM);
         }
+        public async Task<DataTable> GetSanPhamTheoTenBUS(string tenSanPham)
+        {
+            return await dal.GetSanPhamTheoTen(tenSanPham);
+        }
     }
 }

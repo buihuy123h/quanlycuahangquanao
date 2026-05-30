@@ -423,7 +423,6 @@ namespace ql_quan_ao.GUI.UserControls
         // --- CÁC HÀM CŨ ĐỂ KHÔNG BỊ LỖI DESIGNER ---
         private void label1_Click(object sender, EventArgs e) { }
         private void panelCenter_Paint(object sender, PaintEventArgs e) { }
-        private void textBox1_TextChanged(object sender, EventArgs e) { }
         private void label1_Click_1(object sender, EventArgs e) { }
         private void button8_Click(object sender, EventArgs e) { }
         private void button7_Click(object sender, EventArgs e) { }
@@ -559,7 +558,7 @@ namespace ql_quan_ao.GUI.UserControls
 
                 if (dtSanPham == null || dtSanPham.Rows.Count == 0)
                 {
-                    MessageBox.Show("Không tìm thấy sản phẩm nào thuộc nhóm Áo!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Không tìm thấy sản phẩm nào!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
@@ -646,6 +645,105 @@ namespace ql_quan_ao.GUI.UserControls
         private void btn_lay_tat_ca_SP(object sender, EventArgs e)
         {
             HienThiTatCaSanPham();
+        }
+
+        private async void txtTimKiem_TextChanged(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            string tuKhoa = txt.Text.Trim();
+            try
+            {
+                flpDanhSachSP.SuspendLayout();
+                flpDanhSachSP.Controls.Clear(); // Xóa sạch các card sản phẩm cũ trước đó
+
+                // GỌI QUA TẦNG BUS: Lấy danh sách sản phẩm có phân loại là "Áo"
+                // Sử dụng await giúp ứng dụng chạy mượt dưới nền ngầm, không gây đơ UI
+                DataTable dtSanPham = await sanPhamBUS.GetSanPhamTheoTenBUS(tuKhoa);
+
+                if (dtSanPham == null || dtSanPham.Rows.Count == 0)
+                {
+                    MessageBox.Show($"Không tìm thấy sản phẩm '{tuKhoa}'", "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Duyệt qua từng dòng dữ liệu đổ về để dựng UserControl Card
+                foreach (DataRow row in dtSanPham.Rows)
+                {
+                    string maSP = row["MaSP"].ToString();
+                    string tenSP = row["TenSP"].ToString();
+                    decimal giaBan = Convert.ToDecimal(row["GiaBan"]);
+                    int soLuongTon = Convert.ToInt32(row["SoLuongTon"]);
+                    string anhSP = row["AnhSP"].ToString();
+
+                    ucProductCard card = new ucProductCard();
+                    card.ThietLapThongTin(maSP, tenSP, giaBan, soLuongTon, anhSP);
+
+                    // Gán sự kiện click chọn sản phẩm hiển thị chi tiết bên cánh phải (Giữ nguyên logic của bạn)
+                    card.SanPhamSelected += (senderCard, maSanPhamDuocChon) =>
+                    {
+                        ResetThongSoChon();
+
+                        giaHienTai = giaBan;
+                        maxTonKho = soLuongTon;
+
+                        lblChiTietMaSP.Text = "Mã SP: " + maSanPhamDuocChon;
+                        lblChiTietTenSP.Text = tenSP;
+                        lblChiTietGia.Text = giaBan.ToString("#,##0") + "đ";
+                        lblChiTietTon.Text = "Tồn kho: " + soLuongTon;
+
+                        CapNhatSoLuongVaTinhTien();
+
+                        try
+                        {
+                            if (!string.IsNullOrEmpty(anhSP))
+                            {
+                                picAnhSPChiTiet.SizeMode = PictureBoxSizeMode.Zoom;
+                                picAnhSPChiTiet.Load(anhSP);
+                            }
+                            else
+                            {
+                                picAnhSPChiTiet.Image = null;
+                                picAnhSPChiTiet.BackColor = Color.LightGray;
+                            }
+                        }
+                        catch
+                        {
+                            picAnhSPChiTiet.Image = null;
+                            picAnhSPChiTiet.BackColor = Color.LightGray;
+                        }
+                    };
+
+                    // Đưa card áo vừa tạo vào danh sách hiển thị công khai
+                    flpDanhSachSP.Controls.Add(card);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Không tìm thấy sản phẩm" + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                flpDanhSachSP.ResumeLayout();
+            }
+        }
+
+        private void txtTimKiem_enter(object sender, EventArgs e)
+        {
+            if(txtTimKiem.Text == "Tìm kiếm sản phẩm...")
+            {
+                txtTimKiem.Text = "";
+                txtTimKiem.ForeColor = Color.Black;
+            };
+        }
+
+        private void txtTimKiem_leave(object sender, EventArgs e)
+        {
+            if (txtTimKiem.Text == "")
+            {
+                txtTimKiem.Text = "Tìm kiếm sản phẩm...";
+                txtTimKiem.ForeColor = Color.Gray;
+            }
+            ;
         }
     }
 }

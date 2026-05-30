@@ -60,10 +60,45 @@ namespace DAL
             return dt;
         }
 
-/// <summary>
-/// LẤY DANH SÁCH CHO BẠN (HÀM MỚI - ĐÃ ĐƯỢC THÊM VÀO ĐỂ ĐỦ CỘT ĐẶC TẢ KHO HÀNG)
-/// </summary>
-public DataTable GetDanhSachKhoHang()
+        public async Task<DataTable> GetSanPhamTheoTen(string tenSanPham)
+        {
+            DataTable dt = new DataTable();
+
+            // Lọc theo cột TenSP bằng tham số @TenSP
+            string query = "SELECT MaSP, TenSP, GiaBan, SoLuongTon, AnhSP " +
+                           "FROM SanPham WHERE TRIM(TenSP) LIKE @TenSP";
+
+            using (SqlConnection conn = new SqlConnection(db.chuoiKetNoi))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@TenSP", "%" + tenSanPham + "%");
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        try
+                        {
+                            // Mở kết nối bất đồng bộ
+                            await conn.OpenAsync();
+
+                            // Thực thi nạp dữ liệu (chạy trên thread riêng)
+                            await Task.Run(() => adapter.Fill(dt));
+                        }
+                        catch (Exception ex)
+                        {
+                            // Xử lý hoặc log lỗi tại đây nếu cần
+                            throw ex;
+                        }
+                    }
+                }
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// LẤY DANH SÁCH CHO BẠN (HÀM MỚI - ĐÃ ĐƯỢC THÊM VÀO ĐỂ ĐỦ CỘT ĐẶC TẢ KHO HÀNG)
+        /// </summary>
+        public DataTable GetDanhSachKhoHang()
         {
             // Câu lệnh SQL nâng cao: Tự đổi tên MaDM -> LoaiSP, tự tính toán TrangThai tự động
             string query = @"SELECT 
