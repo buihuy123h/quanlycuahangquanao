@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucBanHang));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.panelPagination = new System.Windows.Forms.Panel();
@@ -105,7 +105,6 @@
             this.lblTitleKH = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.lblThanhTien = new System.Windows.Forms.Label();
-            this.txtTongTienHang = new System.Windows.Forms.Label();
             this.btnThanhToan = new System.Windows.Forms.Button();
             this.txtTien = new System.Windows.Forms.TextBox();
             this.txtGiamGia = new System.Windows.Forms.TextBox();
@@ -129,6 +128,7 @@
             this.colDonGia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colThanhTien = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColThaoTac = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtTongTienHang = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelLeft.SuspendLayout();
             this.panelPagination.SuspendLayout();
@@ -978,12 +978,12 @@
             this.tlpThanhToanGroup.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpThanhToanGroup.Controls.Add(this.pnlThongtienkhachhang, 0, 0);
             this.tlpThanhToanGroup.Controls.Add(this.panel9, 1, 0);
-            this.tlpThanhToanGroup.Location = new System.Drawing.Point(3, 427);
+            this.tlpThanhToanGroup.Location = new System.Drawing.Point(3, 413);
             this.tlpThanhToanGroup.Name = "tlpThanhToanGroup";
             this.tlpThanhToanGroup.RowCount = 1;
             this.tlpThanhToanGroup.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpThanhToanGroup.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 341F));
-            this.tlpThanhToanGroup.Size = new System.Drawing.Size(394, 341);
+            this.tlpThanhToanGroup.Size = new System.Drawing.Size(394, 355);
             this.tlpThanhToanGroup.TabIndex = 2;
             // 
             // pnlThongtienkhachhang
@@ -1002,7 +1002,7 @@
             this.pnlThongtienkhachhang.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlThongtienkhachhang.Location = new System.Drawing.Point(3, 3);
             this.pnlThongtienkhachhang.Name = "pnlThongtienkhachhang";
-            this.pnlThongtienkhachhang.Size = new System.Drawing.Size(191, 335);
+            this.pnlThongtienkhachhang.Size = new System.Drawing.Size(191, 349);
             this.pnlThongtienkhachhang.TabIndex = 0;
             // 
             // txtGhiChu
@@ -1013,7 +1013,7 @@
             this.txtGhiChu.Location = new System.Drawing.Point(3, 256);
             this.txtGhiChu.Multiline = true;
             this.txtGhiChu.Name = "txtGhiChu";
-            this.txtGhiChu.Size = new System.Drawing.Size(184, 27);
+            this.txtGhiChu.Size = new System.Drawing.Size(184, 41);
             this.txtGhiChu.TabIndex = 9;
             // 
             // lblGhiChu
@@ -1036,7 +1036,7 @@
             this.txtDiaChi.Location = new System.Drawing.Point(3, 190);
             this.txtDiaChi.Multiline = true;
             this.txtDiaChi.Name = "txtDiaChi";
-            this.txtDiaChi.Size = new System.Drawing.Size(184, 27);
+            this.txtDiaChi.Size = new System.Drawing.Size(184, 41);
             this.txtDiaChi.TabIndex = 7;
             // 
             // lblSDT
@@ -1070,7 +1070,7 @@
             this.txtTenKH.Location = new System.Drawing.Point(3, 124);
             this.txtTenKH.Multiline = true;
             this.txtTenKH.Name = "txtTenKH";
-            this.txtTenKH.Size = new System.Drawing.Size(184, 27);
+            this.txtTenKH.Size = new System.Drawing.Size(184, 41);
             this.txtTenKH.TabIndex = 5;
             // 
             // lblTenKH
@@ -1132,8 +1132,8 @@
             // 
             // panel9
             // 
-            this.panel9.Controls.Add(this.lblThanhTien);
             this.panel9.Controls.Add(this.txtTongTienHang);
+            this.panel9.Controls.Add(this.lblThanhTien);
             this.panel9.Controls.Add(this.btnThanhToan);
             this.panel9.Controls.Add(this.txtTien);
             this.panel9.Controls.Add(this.txtGiamGia);
@@ -1144,7 +1144,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(200, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(191, 335);
+            this.panel9.Size = new System.Drawing.Size(191, 349);
             this.panel9.TabIndex = 1;
             // 
             // lblThanhTien
@@ -1158,22 +1158,13 @@
             this.lblThanhTien.TabIndex = 9;
             this.lblThanhTien.Text = "Thành Tiền";
             // 
-            // txtTongTienHang
-            // 
-            this.txtTongTienHang.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTongTienHang.Location = new System.Drawing.Point(96, 111);
-            this.txtTongTienHang.Name = "txtTongTienHang";
-            this.txtTongTienHang.Size = new System.Drawing.Size(67, 18);
-            this.txtTongTienHang.TabIndex = 8;
-            // 
             // btnThanhToan
             // 
             this.btnThanhToan.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThanhToan.BackColor = System.Drawing.Color.Green;
             this.btnThanhToan.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnThanhToan.Location = new System.Drawing.Point(7, 289);
+            this.btnThanhToan.Location = new System.Drawing.Point(-1, 303);
             this.btnThanhToan.Name = "btnThanhToan";
             this.btnThanhToan.Size = new System.Drawing.Size(184, 43);
             this.btnThanhToan.TabIndex = 5;
@@ -1186,12 +1177,12 @@
             this.txtTien.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTien.Location = new System.Drawing.Point(7, 257);
+            this.txtTien.Location = new System.Drawing.Point(-1, 257);
             this.txtTien.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtTien.Multiline = true;
             this.txtTien.Name = "txtTien";
             this.txtTien.ReadOnly = true;
-            this.txtTien.Size = new System.Drawing.Size(184, 27);
+            this.txtTien.Size = new System.Drawing.Size(184, 41);
             this.txtTien.TabIndex = 7;
             // 
             // txtGiamGia
@@ -1199,10 +1190,10 @@
             this.txtGiamGia.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtGiamGia.Location = new System.Drawing.Point(7, 190);
+            this.txtGiamGia.Location = new System.Drawing.Point(-1, 191);
             this.txtGiamGia.Multiline = true;
             this.txtGiamGia.Name = "txtGiamGia";
-            this.txtGiamGia.Size = new System.Drawing.Size(184, 27);
+            this.txtGiamGia.Size = new System.Drawing.Size(184, 41);
             this.txtGiamGia.TabIndex = 7;
             this.txtGiamGia.TextChanged += new System.EventHandler(this.txtGiamGia_TextChanged);
             // 
@@ -1223,7 +1214,7 @@
             this.lblTongTienHang.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTongTienHang.AutoSize = true;
-            this.lblTongTienHang.Location = new System.Drawing.Point(14, 124);
+            this.lblTongTienHang.Location = new System.Drawing.Point(3, 124);
             this.lblTongTienHang.Name = "lblTongTienHang";
             this.lblTongTienHang.Size = new System.Drawing.Size(99, 16);
             this.lblTongTienHang.TabIndex = 0;
@@ -1241,7 +1232,7 @@
             this.groupBoxThanhToan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBoxThanhToan.Name = "groupBoxThanhToan";
             this.groupBoxThanhToan.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBoxThanhToan.Size = new System.Drawing.Size(166, 90);
+            this.groupBoxThanhToan.Size = new System.Drawing.Size(180, 90);
             this.groupBoxThanhToan.TabIndex = 1;
             this.groupBoxThanhToan.TabStop = false;
             this.groupBoxThanhToan.Text = "Phương thức thanh toán";
@@ -1352,14 +1343,14 @@
             this.colDonGia,
             this.colThanhTien,
             this.ColThaoTac});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView1.Location = new System.Drawing.Point(3, 41);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -1431,6 +1422,16 @@
             this.ColThaoTac.Name = "ColThaoTac";
             this.ColThaoTac.ReadOnly = true;
             this.ColThaoTac.Width = 125;
+            // 
+            // txtTongTienHang
+            // 
+            this.txtTongTienHang.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTongTienHang.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTongTienHang.Location = new System.Drawing.Point(87, 124);
+            this.txtTongTienHang.Name = "txtTongTienHang";
+            this.txtTongTienHang.Size = new System.Drawing.Size(96, 24);
+            this.txtTongTienHang.TabIndex = 10;
+            this.txtTongTienHang.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // ucBanHang
             // 
@@ -1583,12 +1584,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDonGia;
         private System.Windows.Forms.DataGridViewTextBoxColumn colThanhTien;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColThaoTac;
-        private System.Windows.Forms.Label txtTongTienHang;
         private System.Windows.Forms.TextBox txtGiamGia;
         private System.Windows.Forms.Label lblThanhTien;
         private System.Windows.Forms.TextBox txtTien;
         private System.Windows.Forms.Label lblSDT;
         private System.Windows.Forms.Panel pnl_Center_Top_Left;
         private System.Windows.Forms.PictureBox picAnhSPChiTiet;
+        private System.Windows.Forms.TextBox txtTongTienHang;
     }
 }

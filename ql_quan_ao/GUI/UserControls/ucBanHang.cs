@@ -357,7 +357,6 @@ namespace ql_quan_ao.GUI.UserControls
 
             // 4. Đẩy chuỗi định dạng tiền tệ lên các Label và TextBox thích hợp
             txtTongTienHang.Text = tongTienHang.ToString("#,##0") + "đ";
-            lblTongTienHang.Text = tongTienHang.ToString("#,##0") + "đ";
             lblTongTienGioHang.Text = "Tổng Tiền :" + tongTienHang.ToString("#,##0") + "đ";
 
             // Đổ số tiền cuối cùng cần trả vào ô hiển thị kết quả
@@ -766,6 +765,11 @@ namespace ql_quan_ao.GUI.UserControls
         {
             string sdt = txtSDT.Text.Trim();
             txtTenKH.Text=(string)quanLyKhachHangBUS.LayTenKhachHang(sdt);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
