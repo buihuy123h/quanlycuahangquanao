@@ -16,27 +16,57 @@ namespace ql_quan_ao.BUS
 
         public DataTable LayCTHoaDon(string maHD) => dal.LayChiTietHoaDon(maHD);
 
-        public bool ThanhToan(string maKH, decimal tongTien, DataTable dtChiTiet, out string thongBao)
+        //public bool ThanhToan(int maKH, decimal tongTien, DataTable dtChiTiet, out string thongBao)
+        //{
+        //    if (dtChiTiet.Rows.Count == 0)
+        //    {
+        //        thongBao = "Giỏ hàng đang trống, không thể thanh toán!";
+        //        return false;
+        //    }
+
+        //    int maHDVuaSinh = dal.ThemHoaDon(maKH, tongTien);
+
+        //    if (maHDVuaSinh > 0)
+        //    {
+        //        // 3. Khi đã có mã MaHD dạng số nguyên hợp lệ, tiến hành lưu các dòng trong giỏ hàng vào bảng ChiTietHoaDon
+        //        bool checkChiTiet = dal.LuuDanhSachChiTiet(maHDVuaSinh, dtChiTiet);
+
+        //        if (checkChiTiet)
+        //        {
+        //            thongBao = $"Thanh toán thành công! Mã hóa đơn của bạn là: {maHDVuaSinh}";
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            thongBao = "Hóa đơn đã tạo nhưng xảy ra lỗi khi lưu chi tiết các mặt hàng!";
+        //            return false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        thongBao = "Thanh toán thất bại. Không thể tạo hóa đơn mới trên hệ thống!";
+        //        return false;
+        //    }
+        //}
+        public bool ThanhToanThuNghiem(int maKH, decimal tongTien, out string thongBao)
         {
-            if (dtChiTiet.Rows.Count == 0)
-            {
-                thongBao = "Giỏ hàng đang trống, không thể thanh toán!";
-                return false;
-            }
+            // Gọi DAL để chèn vào bảng HoaDon
+            int maHD = dal.ThemHoaDon(maKH, tongTien);
 
-            // Tự động sinh mã hóa đơn theo thời gian thực duy nhất (Dạng chuỗi: HD20260523...)
-            string maHD = "HD" + DateTime.Now.ToString("yyyyMMddHHmmss");
-
-            if (dal.LuuHoaDon(maHD, maKH, tongTien, dtChiTiet))
+            if (maHD > 0)
             {
-                thongBao = "Thanh toán thành công! Mã đơn: " + maHD;
+                thongBao = $"Thành công! Đã lưu vào bảng HoaDon. Mã HD tự tăng vừa sinh là: {maHD}";
                 return true;
             }
             else
             {
-                thongBao = "Thanh toán thất bại. Vui lòng kiểm tra lại hệ thống!";
+                thongBao = "Thất bại! SQL Server không thể tạo dòng mới trong bảng HoaDon.";
                 return false;
             }
+        }
+        public int LuuHoaDonBUS(int maKH, decimal tongTien)
+        {
+            return dal.ThemHoaDon(maKH, tongTien);
         }
     }
 }

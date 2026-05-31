@@ -18,7 +18,8 @@ namespace ql_quan_ao.GUI.UserControls
     {
         DatabaseConnect db = new DatabaseConnect();
         SanPhamDAL sanPhamDAL = new SanPhamDAL();
-
+        QuanLyKhachHangBUS quanLyKhachHangBUS = new QuanLyKhachHangBUS();
+        HoaDonBUS hoaDonBus = new HoaDonBUS();
         // --- THÊM DÒNG NÀY ĐỂ ĐẠI DIỆN CHO TẦNG BUS ---
         private SanPhamBUS sanPhamBUS = new SanPhamBUS();
 
@@ -208,7 +209,6 @@ namespace ql_quan_ao.GUI.UserControls
                     card.SanPhamSelected += (sender, maSanPhamDuocChon) =>
                     {
                         ResetThongSoChon();
-
                         giaHienTai = giaBan;
                         maxTonKho = soLuongTon;
 
@@ -253,7 +253,7 @@ namespace ql_quan_ao.GUI.UserControls
         }
 
         // CHỨC NĂNG CHÍNH: SỰ KIỆN CLICK NÚT THÊM VÀO GIỎ HÀNG
-        private void button18_Click_1(object sender, EventArgs e)
+        private void btnThemVaoGioHang_Click(object sender, EventArgs e)
         {
             if (giaHienTai == 0)
             {
@@ -438,6 +438,7 @@ namespace ql_quan_ao.GUI.UserControls
 
         private void btnThanhToan_Click(object sender, EventArgs e)
         {
+            int makh=-1;
             // 1. Kiểm tra xem giỏ hàng có hàng chưa
             if (dataGridView1.Rows.Count == 0)
             {
@@ -447,7 +448,7 @@ namespace ql_quan_ao.GUI.UserControls
             }
 
             // 2. Lấy thông tin SĐT người dùng nhập (txtSDT)
-            string sdtKhachHang = txtSDT.Text.Trim();
+            string sdtKhachHang = txtSDT.Text.Trim(); 
 
             // Nếu người dùng có nhập SĐT thì bắt buộc phải nhập ĐÚNG ĐỊNH DẠNG
             if (!string.IsNullOrEmpty(sdtKhachHang))
@@ -460,16 +461,7 @@ namespace ql_quan_ao.GUI.UserControls
                     return;
                 }
             }
-            // Trường hợp nếu bạn muốn bắt buộc PHẢI NHẬP SĐT (không cho để trống) thì dùng đoạn này:
-            /*
-            else
-            {
-                MessageBox.Show("Vui lòng nhập số điện thoại khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtSDT.Focus();
-                return;
-            }
-            */
-
+            
             // 3. Kiểm tra xem đã chọn phương thức thanh toán chưa (radTienMat, radChuyenKhoan, radioTheNganHang)
             string phuongThuc = "";
             if (radTienMat.Checked) phuongThuc = "Tiền mặt";
@@ -491,22 +483,40 @@ namespace ql_quan_ao.GUI.UserControls
                                      $"- Phương thức: {phuongThuc}\n\n" +
                                      $"[Hệ thống]: Xác nhận dữ liệu hợp lệ! Bạn có muốn hoàn tất thanh toán và xuất hóa đơn không?";
 
+            int tongtiencantra = int.Parse(txtTien.Text.Replace(",", "").Replace("đ", "").Trim());
             DialogResult result = MessageBox.Show(thongTinXacNhan, "Kiểm tra dữ liệu thành công",
                                                   MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
             if (result == DialogResult.Yes)
             {
-                // KHÚC NÀY: Nơi bạn gọi hàm xuống Database để lưu Hóa đơn (Ví dụ: HoaDonBLL.LuuHoaDon...)
-                // Sau khi lưu DB thành công thì xóa giỏ hàng:
 
-                MessageBox.Show("Thanh toán thành công! Đã lưu hóa đơn vào hệ thống.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (!string.IsNullOrEmpty(txtTenKH.Text.Trim()) && !string.IsNullOrEmpty(sdtKhachHang))
+                {
+                    makh=quanLyKhachHangBUS.ThemKhachHang(txtTenKH.Text.Trim(), sdtKhachHang);
+                }
+                int mahd = hoaDonBus.LuuHoaDonBUS(makh, tongtiencantra);
+                if (mahd > 0)
+                {
+                    MessageBox.Show($"Thanh toán thành công! Đã lưu hóa đơn vào hệ thống.\nMã hóa đơn vừa sinh: {mahd}",
+                                    "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                dataGridView1.Rows.Clear(); // Xóa sạch giỏ hàng
-                txtGiamGia.Text = "0";      // Reset giảm giá
-                txtSDT.Clear();
-                txtTenKH.Clear();
-                txtDiaChi.Clear();
-                txtGhiChu.Clear();
+                    // Làm sạch giao diện đón đơn hàng mới
+                    dataGridView1.Rows.Clear();
+                    txtGiamGia.Text = "0";
+                    txtSDT.Clear();
+                    txtTenKH.Clear();
+                    txtDiaChi.Clear();
+                    txtGhiChu.Clear();
+
+                    // Nếu form của bạn có hàm tính lại tổng tiền nhãn hiển thị thì gọi ở đây
+                    // TinhTongTienHoaDon();
+                }
+                else
+                {
+                    MessageBox.Show("Lưu hóa đơn thất bại! Vui lòng kiểm tra lại kết nối Cơ sở dữ liệu.",
+                                    "Thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
         }
 
@@ -744,6 +754,18 @@ namespace ql_quan_ao.GUI.UserControls
                 txtTimKiem.ForeColor = Color.Gray;
             }
             ;
+        }
+
+        private void btnTimKhach_Click(object sender, EventArgs e)
+        {
+            string sdt = txtSDT.Text.Trim();
+            txtTenKH.Text = (string)quanLyKhachHangBUS.LayTenKhachHang(sdt);
+        }
+
+        private void txtSDT_TextChanged(object sender, EventArgs e)
+        {
+            string sdt = txtSDT.Text.Trim();
+            txtTenKH.Text=(string)quanLyKhachHangBUS.LayTenKhachHang(sdt);
         }
     }
 }

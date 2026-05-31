@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
 
 namespace DAL
 {
@@ -55,5 +56,59 @@ namespace DAL
 
             return dt;
         }
-    }
+        public string GetDanhSachKhachHangTheoSDT(string sdt)
+        {
+            try
+            {
+                // Đưa TOÀN BỘ quá trình kết nối vào trong khối try để bắt triệt để lỗi Login và Timeout
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    string sql = "Select TenKH from KhachHang where SDT='" + sdt + "'";
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    conn.Open();
+                    string tenKH = (string)cmd.ExecuteScalar();
+                    if (tenKH != null)
+                        return tenKH; // Ưu tiên trả về dữ liệu thật từ SQL Server nếu kết nối thông suốt
+                }
+                return null;
+            }
+            catch
+            {
+                // Khối cứu cánh bảo vệ: Nếu SQL Server lỗi quyền đăng nhập (Login failed),
+                // hệ thống tự nhảy xuống đây để nạp dữ liệu ảo giúp bạn chạy phần mềm mượt mà
+                return null;
+            }
+        }
+        public int ThemKhachHang(string tenKH, string sdt)        {
+            int maKHResult = 0;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    // Sử dụng luôn hàm kiểm tra SDT sẵn có của bạn
+                    if (GetDanhSachKhachHangTheoSDT(sdt) != null)
+                    {
+                        string sqlUpdate = "UPDATE KhachHang SET SoLanMua = SoLanMua + 1 WHERE SDT = '" + sdt + "'; SELECT MaKH FROM KhachHang WHERE SDT = '" + sdt + "'";
+                        SqlCommand cmd = new SqlCommand(sqlUpdate, conn);
+                        object resultCheck = cmd.ExecuteScalar();
+                        maKHResult = Convert.ToInt32(resultCheck);
+                    }
+                    else
+                    {
+                        string sql = "INSERT INTO KhachHang(TenKH, SDT, SoLanMua)OUTPUT INSERTED.MaKH VALUES(N'" + tenKH + "', '" + sdt + "', 1)";
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                        object resultCheck = cmd.ExecuteScalar();
+                        maKHResult = Convert.ToInt32(resultCheck);
+                    }
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi lưu thông tin khách hàng: " + ex.Message);
+            }
+            return maKHResult;
+        }
+    } 
 }

@@ -82,10 +82,8 @@ namespace ql_quan_ao.GUI.UserControls
             this.OnClick(e);
         }
 
-        // Khi click vào bất kỳ vị trí nào trên Card, truyền mã sản phẩm ra ngoài
         private void ucProductCard_Click(object sender, EventArgs e)
         {
-            // Kích hoạt sự kiện và bắn MaSP sang cho ucBanHang hứng
             SanPhamSelected?.Invoke(this, this.MaSP);
         }
 

@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ql_quan_ao.DAL
 {
@@ -46,51 +47,32 @@ namespace ql_quan_ao.DAL
         }
 
         // TRUY VẤN 3 (Nâng cao): Lưu hóa đơn mới khi ấn Thanh Toán + Tự động trừ kho
-        public bool LuuHoaDon(string maHD, string maKH, decimal tongTien, DataTable dtChiTiet)
+        
+        public int ThemHoaDon(int maKH, decimal tongTien)
         {
-            using (SqlConnection conn = new SqlConnection(db.GetConnectionString()))
+            int maHDResult = 0;
+            try
             {
-                conn.Open();
-                // Dùng SqlTransaction để đảm bảo chèn lỗi ở bất kỳ dòng nào sẽ hoàn tác ngay lập tức, không lo lệch kho
-                SqlTransaction trans = conn.BeginTransaction();
-                try
+                using (SqlConnection conn = new SqlConnection(db.GetConnectionString()))
                 {
-                    // Lệnh 1: Chèn thông tin chung vào bảng HoaDon
-                    string sqlHD = "INSERT INTO HoaDon (MaHD, NgayLap, MaKH, TongTien) VALUES (@MaHD, GETDATE(), @MaKH, @TongTien)";
-                    SqlCommand cmdHD = new SqlCommand(sqlHD, conn, trans);
-                    cmdHD.Parameters.AddWithValue("@MaHD", maHD);
-                    cmdHD.Parameters.AddWithValue("@MaKH", string.IsNullOrEmpty(maKH) ? (object)DBNull.Value : maKH);
-                    cmdHD.Parameters.AddWithValue("@TongTien", tongTien);
-                    cmdHD.ExecuteNonQuery();
+                    conn.Open();
 
-                    // Lệnh 2 & 3: Duyệt qua giỏ hàng để chèn chi tiết và tự động TRỪ KHO của sản phẩm đó
-                    foreach (DataRow row in dtChiTiet.Rows)
-                    {
-                        string sqlCT = "INSERT INTO ChiTietHoaDon (MaHD, MaSP, SoLuong, DonGia) VALUES (@MaHD, @MaSP, @SoLuong, @DonGia)";
-                        SqlCommand cmdCT = new SqlCommand(sqlCT, conn, trans);
-                        cmdCT.Parameters.AddWithValue("@MaHD", maHD);
-                        cmdCT.Parameters.AddWithValue("@MaSP", row["MaSP"]);
-                        cmdCT.Parameters.AddWithValue("@SoLuong", row["SoLuong"]);
-                        cmdCT.Parameters.AddWithValue("@DonGia", row["DonGia"]);
-                        cmdCT.ExecuteNonQuery();
+                    // LƯU Ý: Bỏ hẳn cột NgayLap ra khỏi câu lệnh dưới đây. 
+                    // SQL sẽ tự động điền ngày giờ hiện tại vào hệ thống cho bạn.
+                    string sql = "INSERT INTO HoaDon(MaKH, TongTien) " +
+                                 "OUTPUT INSERTED.MaHD " +
+                                 "VALUES(" + (maKH > 0 ? maKH.ToString() : "NULL") + ", " + tongTien + ")";
 
-                        // Lệnh UPDATE trừ số lượng tồn kho tự động
-                        string sqlTruKho = "UPDATE SanPham SET SoLuongTon = SoLuongTon - @SoLuong WHERE MaSP = @MaSP";
-                        SqlCommand cmdKho = new SqlCommand(sqlTruKho, conn, trans);
-                        cmdKho.Parameters.AddWithValue("@SoLuong", row["SoLuong"]);
-                        cmdKho.Parameters.AddWithValue("@MaSP", row["MaSP"]);
-                        cmdKho.ExecuteNonQuery();
-                    }
-
-                    trans.Commit(); // Đồng ý lưu nếu chạy mượt mà không lỗi
-                    return true;
-                }
-                catch (Exception)
-                {
-                    trans.Rollback(); // Hủy toàn bộ tiến trình nếu gặp bất kỳ lỗi nào giữa chừng
-                    return false;
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    maHDResult = Convert.ToInt32(cmd.ExecuteScalar());
+                    conn.Close();
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi thêm hóa đơn tại HoaDonDAL: " + ex.Message);
+            }
+            return maHDResult;
         }
     }
 }
