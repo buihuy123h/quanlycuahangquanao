@@ -18,38 +18,7 @@ namespace ql_quan_ao.BUS
 
         public DataTable LayCTHoaDon(string maHD) => dal.LayChiTietHoaDon(maHD);
 
-        //public bool ThanhToan(int maKH, decimal tongTien, DataTable dtChiTiet, out string thongBao)
-        //{
-        //    if (dtChiTiet.Rows.Count == 0)
-        //    {
-        //        thongBao = "Giỏ hàng đang trống, không thể thanh toán!";
-        //        return false;
-        //    }
-
-        //    int maHDVuaSinh = dal.ThemHoaDon(maKH, tongTien);
-
-        //    if (maHDVuaSinh > 0)
-        //    {
-        //        // 3. Khi đã có mã MaHD dạng số nguyên hợp lệ, tiến hành lưu các dòng trong giỏ hàng vào bảng ChiTietHoaDon
-        //        bool checkChiTiet = dal.LuuDanhSachChiTiet(maHDVuaSinh, dtChiTiet);
-
-        //        if (checkChiTiet)
-        //        {
-        //            thongBao = $"Thanh toán thành công! Mã hóa đơn của bạn là: {maHDVuaSinh}";
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            thongBao = "Hóa đơn đã tạo nhưng xảy ra lỗi khi lưu chi tiết các mặt hàng!";
-        //            return false;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        thongBao = "Thanh toán thất bại. Không thể tạo hóa đơn mới trên hệ thống!";
-        //        return false;
-        //    }
-        //}
+        
         public bool ThanhToanThuNghiem(int maKH, decimal tongTien, out string thongBao)
         {
             // Gọi DAL để chèn vào bảng HoaDon

@@ -13,50 +13,43 @@ namespace ql_quan_ao.GUI.Forms
 {
     public partial class Form_ChiTietHoaDon : Form
     {
-        string _maHD;
+        // Biến lưu trữ mã hóa đơn được truyền từ Form lịch sử sang
+        private string _maHD;
 
-        // Constructor nhận mã hóa đơn
+        // Ép buộc phải truyền mã hóa đơn khi khởi tạo Form này
         public Form_ChiTietHoaDon(string maHD)
         {
             InitializeComponent();
             _maHD = maHD;
         }
 
+        // Sự kiện tự động chạy khi Form chi tiết được mở lên
         private void Form_ChiTietHoaDon_Load(object sender, EventArgs e)
         {
-            string sql = "SELECT MaHD, MaSP, SoLuong, DonGia, ThanhTien FROM ChiTietHoaDon WHERE MaHD = '" + _maHD + "'";
-            DataTable dt = DataProvider.Instance.ExecuteQuery(sql);
-
-            // Ép buộc không tự sinh cột để dùng cấu hình bạn đã thiết kế trong Designer
-            dgvDanhSach.AutoGenerateColumns = false;
-
-            // Gán dữ liệu
-            dgvDanhSach.DataSource = dt;
-        }
-
-        private void dgvDanhSach_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void dgvDanhSach_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void dgvHoaDon_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Kiểm tra để tránh lỗi khi click vào Header (dòng tiêu đề)
-            if (e.RowIndex >= 0)
+            try
             {
-                // Lấy MaHD từ cột "MaHD"
-                string maHD = dgvDanhSach.Rows[e.RowIndex].Cells["MaHD"].Value.ToString();
+                this.Text = "Chi tiết hóa đơn: " + _maHD;
 
-                // Mở Form chi tiết và truyền MaHD qua constructor
-                Form_ChiTietHoaDon f = new Form_ChiTietHoaDon(maHD);
-                f.ShowDialog();
+                // Viết chuỗi trên một dòng duy nhất, viết liền mạch để DataProvider thực thi không bị lỗi ký tự xuống dòng
+                string sql = "SELECT MaHD AS MaHD, MaSP AS MaSP, SoLuong AS SoLuong, DonGia AS DonGia, ThanhTien AS ThanhTien " +
+                     "FROM ChiTietHoaDon " +
+                     "WHERE MaHD = " + _maHD;
+
+                // Gọi truy vấn bằng nối chuỗi thuần túy
+                DataTable dt = DataProvider.Instance.ExecuteQuery(sql);
+
+                // Giữ nguyên cấu hình không tự sinh cột
+                dgvDanhSach.AutoGenerateColumns = false;
+
+                // Gán nguồn dữ liệu
+                dgvDanhSach.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi hiển thị dữ liệu: " + ex.Message);
             }
         }
+
+        // Xóa bỏ các sự kiện trống không dùng đến để code gọn gàng hơn
     }
 }
-

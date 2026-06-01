@@ -13,41 +13,38 @@ namespace ql_quan_ao.DAL
     {
         private DatabaseConnect db = new DatabaseConnect();
 
-        // TRUY VẤN 1: Lấy danh sách hóa đơn cho màn hình lịch sử
+        // TRUY VẤN 1: Lấy danh sách hóa đơn mặc định khi mở màn hình Lịch sử
         public DataTable LayDanhSachHoaDon()
         {
-            string sql = @"
-        SELECT 
-            hd.MaHD as 'MaHoaDon',
-            hd.NgayLap as 'NgayLap',
-            kh.TenKH as 'TenKhachHang',
-            hd.TongTien as 'TongTien'
-        FROM HoaDon hd
-        JOIN KhachHang kh
-            ON hd.MaKH = kh.MaKH
-        ORDER BY hd.NgayLap DESC";
+            // Viết nối chuỗi nhiều dòng bằng dấu +
+            string sql = "SELECT hd.MaHD as 'MaHoaDon', " +
+                         "       hd.NgayLap as 'NgayLap', " +
+                         "       ISNULL(kh.TenKH, N'Khách vãng lai') as 'TenKhachHang', " +
+                         "       hd.TongTien as 'TongTien' " +
+                         "FROM HoaDon hd " +
+                         "LEFT JOIN KhachHang kh ON hd.MaKH = kh.MaKH " +
+                         "ORDER BY hd.NgayLap DESC";
 
             return db.ExecuteQuery(sql);
         }
 
-        // TRUY VẤN 2: Lấy chi tiết các món của một hóa đơn khi người dùng click chọn
+        // TRUY VẤN 2: Lấy chi tiết các món của một hóa đơn (Đã bỏ hoàn toàn SqlParameter)
         public DataTable LayChiTietHoaDon(string maHD)
         {
-            string sql = @"SELECT c.MaSP as 'Mã SP', 
-                                  s.TenSP as 'Tên Sản Phẩm', 
-                                  c.SoLuong as 'Số Lượng', 
-                                  c.DonGia as 'Đơn Giá', 
-                                  c.ThanhTien as 'Thành Tiền' 
-                           FROM ChiTietHoaDon c 
-                           JOIN SanPham s ON c.MaSP = s.MaSP 
-                           WHERE c.MaHD = @MaHD";
+            // SỬA TẠI ĐÂY: Nối trực tiếp biến maHD vào chuỗi theo đúng yêu cầu
+            string sql = "SELECT c.MaSP as 'Mã SP', " +
+                         "       ISNULL(s.TenSP, N'Sản phẩm đã ngừng kinh doanh') as 'Tên Sản Phẩm', " +
+                         "       c.SoLuong as 'Số Lượng', " +
+                         "       c.DonGia as 'Đơn Giá', " +
+                         "       c.ThanhTien as 'Thành Tiền' " +
+                         "FROM ChiTietHoaDon c " +
+                         "LEFT JOIN SanPham s ON c.MaSP = s.MaSP " +
+                         "WHERE c.MaHD = '" + maHD + "'";
 
-            SqlParameter[] p = { new SqlParameter("@MaHD", maHD) };
-            return db.ExecuteQuery(sql, p);
+            return db.ExecuteQuery(sql);
         }
 
-        // TRUY VẤN 3 (Nâng cao): Lưu hóa đơn mới khi ấn Thanh Toán + Tự động trừ kho
-        
+        // TRUY VẤN 3: Lưu hóa đơn mới khi ấn Thanh Toán
         public int ThemHoaDon(int maKH, decimal tongTien)
         {
             int maHDResult = 0;
@@ -57,8 +54,6 @@ namespace ql_quan_ao.DAL
                 {
                     conn.Open();
 
-                    // LƯU Ý: Bỏ hẳn cột NgayLap ra khỏi câu lệnh dưới đây. 
-                    // SQL sẽ tự động điền ngày giờ hiện tại vào hệ thống cho bạn.
                     string sql = "INSERT INTO HoaDon(MaKH, TongTien) " +
                                  "OUTPUT INSERTED.MaHD " +
                                  "VALUES(" + (maKH > 0 ? maKH.ToString() : "NULL") + ", " + tongTien + ")";
@@ -74,18 +69,19 @@ namespace ql_quan_ao.DAL
             }
             return maHDResult;
         }
+
+        // TRUY VẤN 4: Lọc lịch sử theo ngày
         public DataTable LayLichSuBanHangTheoNgay(DateTime tuNgay, DateTime denNgay)
         {
-            // Định dạng ngày chuẩn SQL Server
-            string strTuNgay = tuNgay.ToString("yyyy-MM-dd HH:mm:ss");
-            string strDenNgay = denNgay.ToString("yyyy-MM-dd HH:mm:ss");
+            string strTuNgay = tuNgay.ToString("yyyy-MM-dd 00:00:00");
+            string strDenNgay = denNgay.ToString("yyyy-MM-dd 23:59:59");
 
             string query = "SELECT hd.MaHD AS MaHD, " +
                            "       hd.NgayLap AS NgayLap, " +
-                           "       kh.TenKH AS TenKH, " +
+                           "       ISNULL(kh.TenKH, N'Khách vãng lai') AS TenKH, " +
                            "       hd.TongTien AS TongTien " +
                            "FROM HoaDon hd " +
-                           "INNER JOIN KhachHang kh ON hd.MaKH = kh.MaKH " +
+                           "LEFT JOIN KhachHang kh ON hd.MaKH = kh.MaKH " +
                            "WHERE hd.NgayLap BETWEEN '" + strTuNgay + "' AND '" + strDenNgay + "' " +
                            "ORDER BY hd.NgayLap DESC";
 
@@ -102,12 +98,10 @@ namespace ql_quan_ao.DAL
                     }
                     catch (Exception ex)
                     {
-                        // Thảy lỗi ngược lên để tầng trên bắt và hiển thị MessageBox
                         throw new Exception("Lỗi truy vấn cơ sở dữ liệu: " + ex.Message);
                     }
                 }
             }
         }
-
     }
 }

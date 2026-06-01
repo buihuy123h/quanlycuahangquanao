@@ -20,6 +20,7 @@ namespace ql_quan_ao.GUI.UserControls
         SanPhamDAL sanPhamDAL = new SanPhamDAL();
         QuanLyKhachHangBUS quanLyKhachHangBUS = new QuanLyKhachHangBUS();
         HoaDonBUS hoaDonBus = new HoaDonBUS();
+        ChiTietHoaDonBUS chiTietHoaDonBus = new ChiTietHoaDonBUS();
         // --- THÊM DÒNG NÀY ĐỂ ĐẠI DIỆN CHO TẦNG BUS ---
         private SanPhamBUS sanPhamBUS = new SanPhamBUS();
 
@@ -339,7 +340,7 @@ namespace ql_quan_ao.GUI.UserControls
         {
             int makh = -1;
             // 1. Kiểm tra xem giỏ hàng có hàng chưa
-            if (dataGridView1.Rows.Count == 0)
+            if (dataGridView1.Rows.Count == 0 || (dataGridView1.Rows.Count == 1 && dataGridView1.Rows[0].IsNewRow))
             {
                 MessageBox.Show("Giỏ hàng đang trống! Vui lòng thêm sản phẩm trước khi thanh toán.",
                                 "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -356,12 +357,12 @@ namespace ql_quan_ao.GUI.UserControls
                 {
                     MessageBox.Show("Số điện thoại không đúng định dạng Việt Nam! (Phải gồm 10 số và bắt đầu bằng đầu số 03, 05, 07, 08, 09).",
                                     "Sai định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtSDT.Focus(); // Đưa con trỏ chuột quay lại ô SĐT để người dùng sửa
+                    txtSDT.Focus();
                     return;
                 }
             }
 
-            // 3. Kiểm tra xem đã chọn phương thức thanh toán chưa (radTienMat, radChuyenKhoan, radioTheNganHang)
+            // 3. Kiểm tra xem đã chọn phương thức thanh toán chưa
             string phuongThuc = "";
             if (radTienMat.Checked) phuongThuc = "Tiền mặt";
             else if (radChuyenKhoan.Checked) phuongThuc = "Chuyển khoản";
@@ -372,7 +373,7 @@ namespace ql_quan_ao.GUI.UserControls
                 return;
             }
 
-            // 4. Nếu vượt qua tất cả các bước kiểm tra (Validation) ở trên -> Thông báo thành công và hiển thị dữ liệu đã nhận
+            // 4. Xác nhận thông tin đơn hàng
             string thongTinXacNhan = $"=== THÔNG TIN ĐƠN HÀNG ===\n\n" +
                                      $"- Khách hàng: {(string.IsNullOrEmpty(txtTenKH.Text) ? "Khách vãng lai" : txtTenKH.Text.Trim())}\n" +
                                      $"- SĐT: {(string.IsNullOrEmpty(sdtKhachHang) ? "Không có" : sdtKhachHang)}\n" +
@@ -380,7 +381,7 @@ namespace ql_quan_ao.GUI.UserControls
                                      $"- Giảm giá: {txtGiamGia.Text} đ\n" +
                                      $"- Khách cần trả: {txtTien.Text}\n" +
                                      $"- Phương thức: {phuongThuc}\n\n" +
-$"[Hệ thống]: Xác nhận dữ liệu hợp lệ! Bạn có muốn hoàn tất thanh toán và xuất hóa đơn không?";
+                                     $"[Hệ thống]: Xác nhận dữ liệu hợp lệ! Bạn có muốn hoàn tất thanh toán và xuất hóa đơn không?";
 
             int tongtiencantra = int.Parse(txtTien.Text.Replace(",", "").Replace("đ", "").Trim());
             DialogResult result = MessageBox.Show(thongTinXacNhan, "Kiểm tra dữ liệu thành công",
@@ -388,34 +389,73 @@ $"[Hệ thống]: Xác nhận dữ liệu hợp lệ! Bạn có muốn hoàn t�
 
             if (result == DialogResult.Yes)
             {
-
+                // Thực hiện Bước 1: Lưu khách hàng
                 if (!string.IsNullOrEmpty(txtTenKH.Text.Trim()) && !string.IsNullOrEmpty(sdtKhachHang))
                 {
                     makh = quanLyKhachHangBUS.ThemKhachHang(txtTenKH.Text.Trim(), sdtKhachHang);
                 }
+
+                // Thực hiện Bước 2: Lưu hóa đơn chính
                 int mahd = hoaDonBus.LuuHoaDonBUS(makh, tongtiencantra);
+
                 if (mahd > 0)
                 {
-                    MessageBox.Show($"Thanh toán thành công! Đã lưu hóa đơn vào hệ thống.\nMã hóa đơn vừa sinh: {mahd}",
-                                    "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Thực hiện Bước 3: Duyệt và lưu Chi tiết hóa đơn
+                    bool luuChiTietThanhCong = true;
 
-                    // Làm sạch giao diện đón đơn hàng mới
-                    dataGridView1.Rows.Clear();
-                    txtGiamGia.Text = "0";
-                    txtSDT.Clear();
-                    txtTenKH.Clear();
-                    txtDiaChi.Clear();
-                    txtGhiChu.Clear();
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        if (row.IsNewRow) continue;
 
-                    // Nếu form của bạn có hàm tính lại tổng tiền nhãn hiển thị thì gọi ở đây
-                    // TinhTongTienHoaDon();
+                        // 1. Lấy giá trị ô colSanPham (Lưu ý: Nếu ô này hiển thị Tên sản phẩm, database của bạn phải chấp nhận chuỗi tên này làm MaSP nhé)
+                        string maSP = row.Cells["colSanPham"].Value?.ToString() ?? "";
+
+                        // 2. SỬA TẠI ĐÂY: Đổi "SoLuong" thành "Soluong" (chữ l viết thường) đúng chuẩn theo ảnh bạn chụp
+                        int soLuong = row.Cells["Soluong"].Value != null ? Convert.ToInt32(row.Cells["Soluong"].Value) : 0;
+
+                        // 3. Lấy giá trị ô colDonGia đúng theo thiết kế
+                        decimal donGia = row.Cells["colDonGia"].Value != null ? Convert.ToDecimal(row.Cells["colDonGia"].Value) : 0;
+
+                        // Nếu dữ liệu dòng này bị lỗi hoặc số lượng bằng 0 thì bỏ qua không lưu để tránh làm trống DB
+                        if (string.IsNullOrEmpty(maSP) || soLuong == 0) continue;
+
+                        // Gọi xuống hàm lưu chi tiết bằng nối chuỗi
+                        bool kq = chiTietHoaDonBus.ThemChiTietHoaDon(mahd, maSP, soLuong, donGia);
+
+                        if (!kq)
+                        {
+                            luuChiTietThanhCong = false;
+                            break;
+                        }
+                    }
+
+                    // Kiểm tra kết quả tổng thể và thông báo 1 LẦN DUY NHẤT ở đây
+                    if (luuChiTietThanhCong)
+                    {
+                        MessageBox.Show($"Thanh toán thành công! Đã lưu hóa đơn và chi tiết vào hệ thống.\nMã hóa đơn: {mahd}",
+                                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Làm sạch giao diện đón đơn hàng mới
+                        dataGridView1.Rows.Clear();
+                        txtGiamGia.Text = "0";
+                        txtSDT.Clear();
+                        txtTenKH.Clear();
+                        txtDiaChi.Clear();
+                        txtGhiChu.Clear();
+                        txtTien.Text = "0";
+                        txtTongTienHang.Text = "0";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hóa đơn đã tạo thành công nhưng gặp lỗi khi lưu một số mặt hàng trong giỏ!",
+                                        "Lỗi lưu chi tiết", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
                     MessageBox.Show("Lưu hóa đơn thất bại! Vui lòng kiểm tra lại kết nối Cơ sở dữ liệu.",
                                     "Thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
         }
 

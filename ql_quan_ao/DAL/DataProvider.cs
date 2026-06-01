@@ -7,7 +7,7 @@ namespace QuanLyCuaHang.DAL
     public class DataProvider
     {
         
-        private string strConn = @"Data Source=localhost;Initial Catalog=QuanLyCuaHang;Integrated Security=True";
+        private string strConn = @"Data Source=.\SQLEXPRESS;Initial Catalog=QuanLyCuaHang;Integrated Security=True;TrustServerCertificate=True;";
 
         private static DataProvider instance;
         public static DataProvider Instance

@@ -63,5 +63,23 @@ namespace ql_quan_ao.GUI.UserControls
                 MessageBox.Show("Đã xảy ra lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void dgvLichSuBanHang_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                // Sử dụng đúng tên cột Design của bạn là "colMaHD" để lấy Mã hóa đơn
+                string maHD = dgvLichSuBanHang.Rows[e.RowIndex].Cells["colMaHD"].Value.ToString();
+
+                // Khởi tạo Form chi tiết và truyền mã hóa đơn qua Constructor
+                ql_quan_ao.GUI.Forms.Form_ChiTietHoaDon f = new ql_quan_ao.GUI.Forms.Form_ChiTietHoaDon(maHD);
+
+                // Cấu hình hiển thị Form phụ ở chính giữa màn hình
+                f.StartPosition = FormStartPosition.CenterScreen;
+
+                // Bật Form phụ lên dưới dạng cửa sổ Pop-up độc lập
+                f.ShowDialog();
+            }
+        }
     }
 }

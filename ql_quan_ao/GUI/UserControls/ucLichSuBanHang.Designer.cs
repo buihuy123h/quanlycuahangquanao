@@ -125,6 +125,7 @@
             this.dgvLichSuBanHang.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvLichSuBanHang.Size = new System.Drawing.Size(1177, 481);
             this.dgvLichSuBanHang.TabIndex = 1;
+            this.dgvLichSuBanHang.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLichSuBanHang_CellDoubleClick);
             // 
             // colMaHD
             // 

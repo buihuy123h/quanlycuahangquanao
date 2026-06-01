@@ -54,8 +54,6 @@
             this.dgvDanhSach.RowTemplate.Height = 28;
             this.dgvDanhSach.Size = new System.Drawing.Size(800, 450);
             this.dgvDanhSach.TabIndex = 0;
-            this.dgvDanhSach.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDanhSach_CellClick);
-            this.dgvDanhSach.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDanhSach_CellContentClick);
             // 
             // colMaHD
             // 
@@ -102,6 +100,7 @@
             this.Text = "Form_ChiTietHoaDon";
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSach)).EndInit();
             this.ResumeLayout(false);
+            this.Load += new System.EventHandler(this.Form_ChiTietHoaDon_Load);
 
         }
 
