@@ -39,7 +39,6 @@
             this.colNgayLap = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTenKH = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTongTien = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTrangThai = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLichSuBanHang)).BeginInit();
             this.SuspendLayout();
@@ -67,6 +66,7 @@
             this.btnTimKiem.TabIndex = 4;
             this.btnTimKiem.Text = "Tìm kiếm";
             this.btnTimKiem.UseVisualStyleBackColor = true;
+            this.btnTimKiem.Click += new System.EventHandler(this.btnTimKiem_Click);
             // 
             // dateTimePicker2
             // 
@@ -107,18 +107,19 @@
             // dgvLichSuBanHang
             // 
             this.dgvLichSuBanHang.AllowUserToAddRows = false;
+            this.dgvLichSuBanHang.AllowUserToDeleteRows = false;
             this.dgvLichSuBanHang.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvLichSuBanHang.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLichSuBanHang.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colMaHD,
             this.colNgayLap,
             this.colTenKH,
-            this.colTongTien,
-            this.colTrangThai});
+            this.colTongTien});
             this.dgvLichSuBanHang.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvLichSuBanHang.Location = new System.Drawing.Point(0, 196);
             this.dgvLichSuBanHang.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvLichSuBanHang.Name = "dgvLichSuBanHang";
+            this.dgvLichSuBanHang.ReadOnly = true;
             this.dgvLichSuBanHang.RowHeadersWidth = 62;
             this.dgvLichSuBanHang.RowTemplate.Height = 28;
             this.dgvLichSuBanHang.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -130,30 +131,28 @@
             this.colMaHD.HeaderText = "Mã Hoá Đơn";
             this.colMaHD.MinimumWidth = 8;
             this.colMaHD.Name = "colMaHD";
+            this.colMaHD.ReadOnly = true;
             // 
             // colNgayLap
             // 
             this.colNgayLap.HeaderText = "Ngày Lập";
             this.colNgayLap.MinimumWidth = 8;
             this.colNgayLap.Name = "colNgayLap";
+            this.colNgayLap.ReadOnly = true;
             // 
             // colTenKH
             // 
             this.colTenKH.HeaderText = "Tên Khách Hàng";
             this.colTenKH.MinimumWidth = 8;
             this.colTenKH.Name = "colTenKH";
+            this.colTenKH.ReadOnly = true;
             // 
             // colTongTien
             // 
             this.colTongTien.HeaderText = "Tổng tiền";
             this.colTongTien.MinimumWidth = 8;
             this.colTongTien.Name = "colTongTien";
-            // 
-            // colTrangThai
-            // 
-            this.colTrangThai.HeaderText = "Trạng Thái";
-            this.colTrangThai.MinimumWidth = 8;
-            this.colTrangThai.Name = "colTrangThai";
+            this.colTongTien.ReadOnly = true;
             // 
             // ucLichSuBanHang
             // 
@@ -183,6 +182,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colNgayLap;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTenKH;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTongTien;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTrangThai;
     }
 }

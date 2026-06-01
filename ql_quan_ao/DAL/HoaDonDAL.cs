@@ -74,5 +74,40 @@ namespace ql_quan_ao.DAL
             }
             return maHDResult;
         }
+        public DataTable LayLichSuBanHangTheoNgay(DateTime tuNgay, DateTime denNgay)
+        {
+            // Định dạng ngày chuẩn SQL Server
+            string strTuNgay = tuNgay.ToString("yyyy-MM-dd HH:mm:ss");
+            string strDenNgay = denNgay.ToString("yyyy-MM-dd HH:mm:ss");
+
+            string query = "SELECT hd.MaHD AS MaHD, " +
+                           "       hd.NgayLap AS NgayLap, " +
+                           "       kh.TenKH AS TenKH, " +
+                           "       hd.TongTien AS TongTien " +
+                           "FROM HoaDon hd " +
+                           "INNER JOIN KhachHang kh ON hd.MaKH = kh.MaKH " +
+                           "WHERE hd.NgayLap BETWEEN '" + strTuNgay + "' AND '" + strDenNgay + "' " +
+                           "ORDER BY hd.NgayLap DESC";
+
+            using (SqlConnection conn = new SqlConnection(db.GetConnectionString()))
+            {
+                using (SqlDataAdapter adapter = new SqlDataAdapter(query, conn))
+                {
+                    DataTable dt = new DataTable();
+                    try
+                    {
+                        conn.Open();
+                        adapter.Fill(dt);
+                        return dt;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Thảy lỗi ngược lên để tầng trên bắt và hiển thị MessageBox
+                        throw new Exception("Lỗi truy vấn cơ sở dữ liệu: " + ex.Message);
+                    }
+                }
+            }
+        }
+
     }
 }
