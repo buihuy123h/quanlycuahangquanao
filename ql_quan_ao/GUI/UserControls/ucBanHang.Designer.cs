@@ -2,14 +2,10 @@
 {
     partial class ucBanHang
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
+        
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
+        
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
@@ -29,7 +25,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucBanHang));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.panelPagination = new System.Windows.Forms.Panel();
@@ -104,6 +100,7 @@
             this.txtSDT = new System.Windows.Forms.TextBox();
             this.lblTitleKH = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.txtTongTienHang = new System.Windows.Forms.TextBox();
             this.lblThanhTien = new System.Windows.Forms.Label();
             this.btnThanhToan = new System.Windows.Forms.Button();
             this.txtTien = new System.Windows.Forms.TextBox();
@@ -128,7 +125,6 @@
             this.colDonGia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colThanhTien = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColThaoTac = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtTongTienHang = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelLeft.SuspendLayout();
             this.panelPagination.SuspendLayout();
@@ -466,7 +462,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(24, 317);
+            this.label9.Location = new System.Drawing.Point(24, 331);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(91, 18);
             this.label9.TabIndex = 0;
@@ -476,7 +472,7 @@
             // 
             this.txtThanhTien.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtThanhTien.Location = new System.Drawing.Point(121, 319);
+            this.txtThanhTien.Location = new System.Drawing.Point(128, 332);
             this.txtThanhTien.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtThanhTien.Name = "txtThanhTien";
             this.txtThanhTien.Size = new System.Drawing.Size(89, 22);
@@ -489,7 +485,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(22, 260);
+            this.label8.Location = new System.Drawing.Point(29, 286);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(82, 20);
@@ -507,7 +503,7 @@
             this.panel7.Controls.Add(this.label2);
             this.panel7.Location = new System.Drawing.Point(3, 0);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(329, 242);
+            this.panel7.Size = new System.Drawing.Size(329, 274);
             this.panel7.TabIndex = 16;
             // 
             // tableLayoutPanel4
@@ -559,6 +555,7 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(70, 71);
             this.panel6.TabIndex = 6;
+            this.panel6.Click += new System.EventHandler(this.ChonMauHong_Click);
             // 
             // pictureBox5
             // 
@@ -593,6 +590,7 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(68, 71);
             this.panel5.TabIndex = 6;
+            this.panel5.Click += new System.EventHandler(this.ChonMauXanhNavi_Click);
             // 
             // pictureBox4
             // 
@@ -627,6 +625,7 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(68, 71);
             this.panel3.TabIndex = 3;
+            this.panel3.Click += new System.EventHandler(this.ChonMau1_Black_Click);
             // 
             // pictureBox2
             // 
@@ -661,6 +660,7 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(68, 71);
             this.panel4.TabIndex = 6;
+            this.panel4.Click += new System.EventHandler(this.ChonMauTrang_Click);
             // 
             // pictureBox3
             // 
@@ -730,6 +730,7 @@
             this.btnSizeXL.TabIndex = 10;
             this.btnSizeXL.Text = "XL";
             this.btnSizeXL.UseVisualStyleBackColor = true;
+            this.btnSizeXL.Click += new System.EventHandler(this.btnSizeXL_Click);
             // 
             // btnSizeM
             // 
@@ -742,6 +743,7 @@
             this.btnSizeM.TabIndex = 8;
             this.btnSizeM.Text = "M";
             this.btnSizeM.UseVisualStyleBackColor = true;
+            this.btnSizeM.Click += new System.EventHandler(this.btnSizeM_Click);
             // 
             // btnSizeL
             // 
@@ -754,6 +756,7 @@
             this.btnSizeL.TabIndex = 9;
             this.btnSizeL.Text = "L";
             this.btnSizeL.UseVisualStyleBackColor = true;
+            this.btnSizeL.Click += new System.EventHandler(this.btnSizeL_Click);
             // 
             // btnSizeS
             // 
@@ -766,6 +769,7 @@
             this.btnSizeS.TabIndex = 7;
             this.btnSizeS.Text = "S";
             this.btnSizeS.UseVisualStyleBackColor = true;
+            this.btnSizeS.Click += new System.EventHandler(this.btnSizeS_Click);
             // 
             // label3
             // 
@@ -797,13 +801,14 @@
             // 
             this.txtSoLuong.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSoLuong.Location = new System.Drawing.Point(143, 260);
+            this.txtSoLuong.Location = new System.Drawing.Point(164, 286);
             this.txtSoLuong.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSoLuong.Name = "txtSoLuong";
             this.txtSoLuong.Size = new System.Drawing.Size(90, 22);
             this.txtSoLuong.TabIndex = 15;
             this.txtSoLuong.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtSoLuong.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.txtSoLuong.TextChanged += new System.EventHandler(this.txtSoLuong_TextChanged);
+            this.txtSoLuong.Enter += new System.EventHandler(this.txtSoLuong_Enter);
             // 
             // btnTangSoLuong
             // 
@@ -814,13 +819,14 @@
             this.btnTangSoLuong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTangSoLuong.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTangSoLuong.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnTangSoLuong.Location = new System.Drawing.Point(237, 260);
+            this.btnTangSoLuong.Location = new System.Drawing.Point(258, 286);
             this.btnTangSoLuong.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnTangSoLuong.Name = "btnTangSoLuong";
             this.btnTangSoLuong.Size = new System.Drawing.Size(27, 20);
             this.btnTangSoLuong.TabIndex = 14;
             this.btnTangSoLuong.Text = "+";
             this.btnTangSoLuong.UseVisualStyleBackColor = false;
+            this.btnTangSoLuong.Click += new System.EventHandler(this.btnTangSoLuong_Click);
             // 
             // btnGiamSoLuong
             // 
@@ -830,13 +836,14 @@
             this.btnGiamSoLuong.FlatAppearance.BorderSize = 0;
             this.btnGiamSoLuong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGiamSoLuong.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGiamSoLuong.Location = new System.Drawing.Point(114, 260);
+            this.btnGiamSoLuong.Location = new System.Drawing.Point(135, 286);
             this.btnGiamSoLuong.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnGiamSoLuong.Name = "btnGiamSoLuong";
             this.btnGiamSoLuong.Size = new System.Drawing.Size(28, 20);
             this.btnGiamSoLuong.TabIndex = 13;
             this.btnGiamSoLuong.Text = "-";
             this.btnGiamSoLuong.UseVisualStyleBackColor = false;
+            this.btnGiamSoLuong.Click += new System.EventHandler(this.btnGiamSoLuong_Click);
             // 
             // pnlBottom
             // 
@@ -982,7 +989,7 @@
             this.tlpThanhToanGroup.Name = "tlpThanhToanGroup";
             this.tlpThanhToanGroup.RowCount = 1;
             this.tlpThanhToanGroup.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpThanhToanGroup.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 341F));
+            this.tlpThanhToanGroup.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 355F));
             this.tlpThanhToanGroup.Size = new System.Drawing.Size(394, 355);
             this.tlpThanhToanGroup.TabIndex = 2;
             // 
@@ -1147,6 +1154,16 @@
             this.panel9.Size = new System.Drawing.Size(191, 349);
             this.panel9.TabIndex = 1;
             // 
+            // txtTongTienHang
+            // 
+            this.txtTongTienHang.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTongTienHang.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTongTienHang.Location = new System.Drawing.Point(87, 124);
+            this.txtTongTienHang.Name = "txtTongTienHang";
+            this.txtTongTienHang.Size = new System.Drawing.Size(96, 24);
+            this.txtTongTienHang.TabIndex = 10;
+            this.txtTongTienHang.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
             // lblThanhTien
             // 
             this.lblThanhTien.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1303,13 +1320,13 @@
             this.panel8.Controls.Add(this.lblTieuDeGioHang);
             this.panel8.Location = new System.Drawing.Point(3, 3);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(383, 36);
+            this.panel8.Size = new System.Drawing.Size(397, 36);
             this.panel8.TabIndex = 0;
             // 
             // btnXoaTatCa
             // 
             this.btnXoaTatCa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnXoaTatCa.Location = new System.Drawing.Point(251, 0);
+            this.btnXoaTatCa.Location = new System.Drawing.Point(265, 0);
             this.btnXoaTatCa.Name = "btnXoaTatCa";
             this.btnXoaTatCa.Size = new System.Drawing.Size(100, 23);
             this.btnXoaTatCa.TabIndex = 1;
@@ -1343,14 +1360,14 @@
             this.colDonGia,
             this.colThanhTien,
             this.ColThaoTac});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.Location = new System.Drawing.Point(3, 41);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -1422,16 +1439,6 @@
             this.ColThaoTac.Name = "ColThaoTac";
             this.ColThaoTac.ReadOnly = true;
             this.ColThaoTac.Width = 125;
-            // 
-            // txtTongTienHang
-            // 
-            this.txtTongTienHang.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTongTienHang.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTongTienHang.Location = new System.Drawing.Point(87, 124);
-            this.txtTongTienHang.Name = "txtTongTienHang";
-            this.txtTongTienHang.Size = new System.Drawing.Size(96, 24);
-            this.txtTongTienHang.TabIndex = 10;
-            this.txtTongTienHang.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // ucBanHang
             // 

@@ -40,114 +40,22 @@ namespace ql_quan_ao.GUI.UserControls
                 System.Reflection.BindingFlags.Instance |
                 System.Reflection.BindingFlags.NonPublic,
                 null, flpDanhSachSP, new object[] { true });
-
-            // Đăng ký sự kiện xử lý thông số ngay khi khởi tạo
-            GanSuKienChonSize();
-            GanSuKienChonMau();
             GanSuKienTangGiamSoLuong();
-
-            // Khởi tạo tiền hóa đơn về 0 ban đầu và gán sự kiện TextChanged cho ô giảm giá
-            GanSuKienTinhTienHoaDon();
+            txtGiamGia.Text = "0";
 
             // Đăng ký sự kiện click chuột trực tiếp vào các ô (Nút Xóa dòng) trên lưới giỏ hàng
             dataGridView1.CellContentClick += DataGridView1_CellContentClick;
 
-            // Đảm bảo ô hiển thị tiền "Khách cần trả" không bị gõ đè bằng tay làm sai logic
+
             txtTien.ReadOnly = true;
         }
-
-        #region XỬ LÝ SỰ KIỆN CHỌN THÔNG SỐ (SIZE, MÀU, SỐ LƯỢNG)
-
-        private void GanSuKienChonSize()
-        {
-            Button[] dsButtonSize = { btnSizeS, btnSizeM, btnSizeL, btnSizeXL };
-            foreach (Button btn in dsButtonSize)
-            {
-                btn.Click += (s, e) =>
-                {
-                    foreach (Button b in dsButtonSize)
-                    {
-                        b.BackColor = Color.White;
-                        b.ForeColor = Color.Black;
-                    }
-                    btn.BackColor = Color.DodgerBlue;
-                    btn.ForeColor = Color.White;
-                    sizeDuocChon = btn.Text;
-                };
-            }
-        }
-
-        private void GanSuKienChonMau()
-        {
-            Panel[] dsPanelMau = { panel3, panel4, panel5, panel6 };
-            foreach (Panel pnl in dsPanelMau)
-            {
-                Label lblColorName = pnl.Controls.OfType<Label>().FirstOrDefault();
-                PictureBox picCircle = pnl.Controls.OfType<PictureBox>().FirstOrDefault();
-
-                EventHandler colorSelectEvent = (s, e) =>
-                {
-                    foreach (Panel p in dsPanelMau) p.BackColor = Color.Transparent;
-                    pnl.BackColor = Color.LightSkyBlue;
-
-                    if (lblColorName != null)
-                    {
-                        mauDuocChon = lblColorName.Text;
-                    }
-                };
-
-                pnl.Click += colorSelectEvent;
-                if (lblColorName != null) lblColorName.Click += colorSelectEvent;
-                if (picCircle != null) picCircle.Click += colorSelectEvent;
-            }
-        }
+  
 
         private void GanSuKienTangGiamSoLuong()
         {
             txtSoLuong.Text = soLuongMua.ToString();
             txtSoLuong.TextAlign = HorizontalAlignment.Center;
             txtThanhTien.ReadOnly = true;
-
-            btnGiamSoLuong.Click += (s, e) =>
-            {
-                if (soLuongMua > 1)
-                {
-                    soLuongMua--;
-                    CapNhatSoLuongVaTinhTien();
-                }
-            };
-
-            btnTangSoLuong.Click += (s, e) =>
-            {
-                if (soLuongMua < maxTonKho)
-                {
-                    soLuongMua++;
-                    CapNhatSoLuongVaTinhTien();
-                }
-                else
-                {
-                    MessageBox.Show($"Sản phẩm này chỉ còn tối đa {maxTonKho} sản phẩm trong kho!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            };
-
-            txtSoLuong.TextChanged += (s, e) =>
-            {
-                if (int.TryParse(txtSoLuong.Text, out int result))
-                {
-                    if (result < 1) soLuongMua = 1;
-                    else if (result > maxTonKho && maxTonKho > 0)
-                    {
-                        MessageBox.Show($"Số lượng vượt quá tồn kho ({maxTonKho})!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        soLuongMua = maxTonKho;
-                    }
-                    else soLuongMua = result;
-                }
-                else
-                {
-                    soLuongMua = 1;
-                }
-                CapNhatSoLuongVaTinhTien();
-            };
         }
 
         private void CapNhatSoLuongVaTinhTien()
@@ -178,8 +86,6 @@ namespace ql_quan_ao.GUI.UserControls
             Panel[] dsPanelMau = { panel3, panel4, panel5, panel6 };
             foreach (Panel p in dsPanelMau) p.BackColor = Color.Transparent;
         }
-
-        #endregion
 
         // Tải danh sách sản phẩm lên FlowLayoutPanel dưới nền ngầm
         private async void HienThiTatCaSanPham()
@@ -321,13 +227,6 @@ namespace ql_quan_ao.GUI.UserControls
 
         #region XỬ LÝ TÍNH TOÁN TIỀN HÓA ĐƠN VÀ SỐ THỨ TỰ INDEX TỰ ĐỘNG
 
-        private void GanSuKienTinhTienHoaDon()
-        {
-            txtGiamGia.Text = "0";
-            // Kích hoạt tính tiền tự động bất cứ khi nào chữ trong ô giảm giá biến đổi
-            txtGiamGia.TextChanged += (s, e) => TinhTongTienHoaDon();
-        }
-
         private void TinhTongTienHoaDon()
         {
             decimal tongTienHang = 0;
@@ -391,15 +290,14 @@ namespace ql_quan_ao.GUI.UserControls
             }
         }
 
-        // SỰ KIỆN XÓA TỪNG MÓN HÀNG: Khi người dùng nhấn nút chữ "Xóa" ở cột cuối cùng
+        // SỰ KIỆN XÓA TỪNG MÓN HÀNG: 
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Kiểm tra xem hàng được chọn có hợp lệ và cột click vào có phải là cột Thao Tác (Index số 7) không
             if (e.RowIndex >= 0 && e.ColumnIndex == 7)
             {
-                dataGridView1.Rows.RemoveAt(e.RowIndex); // Tiến hành xóa dòng này khỏi giỏ hàng
-                CapNhatLaiSTT();                         // Đánh lại số thứ tự index 1, 2, 3... mượt mà
-                TinhTongTienHoaDon();                    // Cập nhật lại hóa đơn tính tổng tiền
+                dataGridView1.Rows.RemoveAt(e.RowIndex);
+                CapNhatLaiSTT();
+                TinhTongTienHoaDon();
             }
         }
 
@@ -421,7 +319,6 @@ namespace ql_quan_ao.GUI.UserControls
 
         // --- CÁC HÀM CŨ ĐỂ KHÔNG BỊ LỖI DESIGNER ---
         private void label1_Click(object sender, EventArgs e) { }
-        private void panelCenter_Paint(object sender, PaintEventArgs e) { }
         private void label1_Click_1(object sender, EventArgs e) { }
         private void button8_Click(object sender, EventArgs e) { }
         private void button7_Click(object sender, EventArgs e) { }
@@ -432,12 +329,15 @@ namespace ql_quan_ao.GUI.UserControls
         private void pnlMiddle_Paint(object sender, PaintEventArgs e) { }
         private void flpDanhSachSP_Paint(object sender, PaintEventArgs e) { }
         private void label3_Click(object sender, EventArgs e) { }
-        private void tableLayoutPanel6_Paint(object sender, PaintEventArgs e) { }
-        private void textBox2_TextChanged(object sender, EventArgs e) { }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
 
         private void btnThanhToan_Click(object sender, EventArgs e)
         {
-            int makh=-1;
+            int makh = -1;
             // 1. Kiểm tra xem giỏ hàng có hàng chưa
             if (dataGridView1.Rows.Count == 0)
             {
@@ -447,7 +347,7 @@ namespace ql_quan_ao.GUI.UserControls
             }
 
             // 2. Lấy thông tin SĐT người dùng nhập (txtSDT)
-            string sdtKhachHang = txtSDT.Text.Trim(); 
+            string sdtKhachHang = txtSDT.Text.Trim();
 
             // Nếu người dùng có nhập SĐT thì bắt buộc phải nhập ĐÚNG ĐỊNH DẠNG
             if (!string.IsNullOrEmpty(sdtKhachHang))
@@ -460,7 +360,7 @@ namespace ql_quan_ao.GUI.UserControls
                     return;
                 }
             }
-            
+
             // 3. Kiểm tra xem đã chọn phương thức thanh toán chưa (radTienMat, radChuyenKhoan, radioTheNganHang)
             string phuongThuc = "";
             if (radTienMat.Checked) phuongThuc = "Tiền mặt";
@@ -480,7 +380,7 @@ namespace ql_quan_ao.GUI.UserControls
                                      $"- Giảm giá: {txtGiamGia.Text} đ\n" +
                                      $"- Khách cần trả: {txtTien.Text}\n" +
                                      $"- Phương thức: {phuongThuc}\n\n" +
-                                     $"[Hệ thống]: Xác nhận dữ liệu hợp lệ! Bạn có muốn hoàn tất thanh toán và xuất hóa đơn không?";
+$"[Hệ thống]: Xác nhận dữ liệu hợp lệ! Bạn có muốn hoàn tất thanh toán và xuất hóa đơn không?";
 
             int tongtiencantra = int.Parse(txtTien.Text.Replace(",", "").Replace("đ", "").Trim());
             DialogResult result = MessageBox.Show(thongTinXacNhan, "Kiểm tra dữ liệu thành công",
@@ -491,7 +391,7 @@ namespace ql_quan_ao.GUI.UserControls
 
                 if (!string.IsNullOrEmpty(txtTenKH.Text.Trim()) && !string.IsNullOrEmpty(sdtKhachHang))
                 {
-                    makh=quanLyKhachHangBUS.ThemKhachHang(txtTenKH.Text.Trim(), sdtKhachHang);
+                    makh = quanLyKhachHangBUS.ThemKhachHang(txtTenKH.Text.Trim(), sdtKhachHang);
                 }
                 int mahd = hoaDonBus.LuuHoaDonBUS(makh, tongtiencantra);
                 if (mahd > 0)
@@ -541,14 +441,27 @@ namespace ql_quan_ao.GUI.UserControls
 
         private void txtGiamGia_TextChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtGiamGia.Text))
+            {
+                TinhTongTienHoaDon();
+                return;
+            }
 
+            // Nếu nhập sai định dạng số, hệ thống sẽ tự động đưa về 0 và đưa con trỏ về cuối số 0
+            if (!decimal.TryParse(txtGiamGia.Text, out decimal giamGia))
+            {
+                MessageBox.Show("Vui lòng chỉ nhập số tiền giảm giá hợp lệ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtGiamGia.Text = "0";
+                return;
+            }
+
+            TinhTongTienHoaDon();
         }
 
         private void lblTongTienHang_Click(object sender, EventArgs e)
         {
 
         }
-
         private void lblSDT_Click(object sender, EventArgs e)
         {
 
@@ -559,10 +472,7 @@ namespace ql_quan_ao.GUI.UserControls
             try
             {
                 flpDanhSachSP.SuspendLayout();
-                flpDanhSachSP.Controls.Clear(); // Xóa sạch các card sản phẩm cũ trước đó
-
-                // GỌI QUA TẦNG BUS: Lấy danh sách sản phẩm có phân loại là "Áo"
-                // Sử dụng await giúp ứng dụng chạy mượt dưới nền ngầm, không gây đơ UI
+                flpDanhSachSP.Controls.Clear();
                 DataTable dtSanPham = await sanPhamBUS.GetSanPhamTheoLoaiBUS(MaDM);
 
                 if (dtSanPham == null || dtSanPham.Rows.Count == 0)
@@ -618,7 +528,7 @@ namespace ql_quan_ao.GUI.UserControls
                         }
                     };
 
-                    // Đưa card áo vừa tạo vào danh sách hiển thị công khai
+                    // Đưa card áo vừa tạo vào danh sách hiển thị 
                     flpDanhSachSP.Controls.Add(card);
                 }
             }
@@ -665,8 +575,6 @@ namespace ql_quan_ao.GUI.UserControls
                 flpDanhSachSP.SuspendLayout();
                 flpDanhSachSP.Controls.Clear(); // Xóa sạch các card sản phẩm cũ trước đó
 
-                // GỌI QUA TẦNG BUS: Lấy danh sách sản phẩm có phân loại là "Áo"
-                // Sử dụng await giúp ứng dụng chạy mượt dưới nền ngầm, không gây đơ UI
                 DataTable dtSanPham = await sanPhamBUS.GetSanPhamTheoTenBUS(tuKhoa);
 
                 if (dtSanPham == null || dtSanPham.Rows.Count == 0)
@@ -699,7 +607,6 @@ namespace ql_quan_ao.GUI.UserControls
                         lblChiTietTenSP.Text = tenSP;
                         lblChiTietGia.Text = giaBan.ToString("#,##0") + "đ";
                         lblChiTietTon.Text = "Tồn kho: " + soLuongTon;
-
                         CapNhatSoLuongVaTinhTien();
 
                         try
@@ -738,11 +645,12 @@ namespace ql_quan_ao.GUI.UserControls
 
         private void txtTimKiem_enter(object sender, EventArgs e)
         {
-            if(txtTimKiem.Text == "Tìm kiếm sản phẩm...")
+            if (txtTimKiem.Text == "Tìm kiếm sản phẩm...")
             {
                 txtTimKiem.Text = "";
                 txtTimKiem.ForeColor = Color.Black;
-            };
+            }
+            ;
         }
 
         private void txtTimKiem_leave(object sender, EventArgs e)
@@ -764,12 +672,165 @@ namespace ql_quan_ao.GUI.UserControls
         private void txtSDT_TextChanged(object sender, EventArgs e)
         {
             string sdt = txtSDT.Text.Trim();
-            txtTenKH.Text=(string)quanLyKhachHangBUS.LayTenKhachHang(sdt);
+            txtTenKH.Text = (string)quanLyKhachHangBUS.LayTenKhachHang(sdt);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSizeS_Click(object sender, EventArgs e)
+        {
+            Button btnSizeS = sender as Button;
+            Button[] dsButtonSize = { btnSizeS, btnSizeM, btnSizeL, btnSizeXL };
+
+            foreach (Button b in dsButtonSize)
+            {
+                b.BackColor = Color.White;
+                b.ForeColor = Color.Black;
+            }
+            btnSizeS.BackColor = Color.DodgerBlue;
+            btnSizeS.ForeColor = Color.White;
+            sizeDuocChon = btnSizeS.Text;
+        }
+
+        private void txtThanhTien_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnTangSoLuong_Click(object sender, EventArgs e)
+        {
+            if (soLuongMua < maxTonKho)
+            {
+                soLuongMua++;
+                CapNhatSoLuongVaTinhTien();
+            }
+            else
+            {
+                MessageBox.Show($"Sản phẩm này chỉ còn tối đa {maxTonKho} sản phẩm trong kho!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnGiamSoLuong_Click(object sender, EventArgs e)
+        {
+            if (soLuongMua > 1)
+            {
+                soLuongMua--;
+                CapNhatSoLuongVaTinhTien();
+            }
+        }
+
+        private void btnSizeM_Click(object sender, EventArgs e)
+        {
+            Button btnSizeM = sender as Button;
+            Button[] dsButtonSize = { btnSizeM, btnSizeS, btnSizeL, btnSizeXL };
+
+            foreach (Button b in dsButtonSize)
+            {
+                b.BackColor = Color.White;
+                b.ForeColor = Color.Black;
+            }
+            btnSizeM.BackColor = Color.DodgerBlue;
+            btnSizeM.ForeColor = Color.White;
+            sizeDuocChon = btnSizeM.Text;
+        }
+
+        private void btnSizeL_Click(object sender, EventArgs e)
+        {
+            Button btnSizeL = sender as Button;
+            Button[] dsButtonSize = { btnSizeS, btnSizeM, btnSizeL, btnSizeXL };
+
+            foreach (Button b in dsButtonSize)
+            {
+                b.BackColor = Color.White;
+                b.ForeColor = Color.Black;
+            }
+            btnSizeL.BackColor = Color.DodgerBlue;
+            btnSizeL.ForeColor = Color.White;
+            sizeDuocChon = btnSizeL.Text;
+        }
+
+        private void btnSizeXL_Click(object sender, EventArgs e)
+        {
+            Button btnSizeXL = sender as Button;
+            Button[] dsButtonSize = { btnSizeS, btnSizeM, btnSizeL, btnSizeXL };
+
+            foreach (Button b in dsButtonSize)
+            {
+                b.BackColor = Color.White;
+                b.ForeColor = Color.Black;
+            }
+            btnSizeXL.BackColor = Color.DodgerBlue;
+            btnSizeXL.ForeColor = Color.White;
+            sizeDuocChon = btnSizeXL.Text;
+        }
+
+        private void ChonMau1_Black_Click(object sender, EventArgs e)
+        {
+            ResetMauNenCacPanel();
+            panel3.BackColor = Color.LightSkyBlue;
+            mauDuocChon = lblMauĐen.Text;
+        }
+
+        private void ChonMauTrang_Click(object sender, EventArgs e)
+        {
+            ResetMauNenCacPanel();
+            panel4.BackColor = Color.LightSkyBlue;
+            mauDuocChon = label4.Text;
+        }
+
+        private void ChonMauXanhNavi_Click(object sender, EventArgs e)
+        {
+            ResetMauNenCacPanel();
+            panel5.BackColor = Color.LightSkyBlue;
+            mauDuocChon = label5.Text;
+        }
+
+        private void ChonMauHong_Click(object sender, EventArgs e)
+        {
+            ResetMauNenCacPanel();
+            panel6.BackColor = Color.LightSkyBlue;
+            mauDuocChon = label6.Text;
+        }
+
+        // Hàm phụ trợ dùng riêng để xóa màu nền cho ngắn code
+        private void ResetMauNenCacPanel()
+        {
+            panel3.BackColor = Color.Transparent;
+            panel4.BackColor = Color.Transparent;
+            panel5.BackColor = Color.Transparent;
+            panel6.BackColor = Color.Transparent;
+        }
+        private void txtSoLuong_Enter(object sender, EventArgs e)
+        {
+            txtSoLuong.SelectAll();
+        }
+
+        private void txtSoLuong_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSoLuong.Text))
+                return;
+
+            if (int.TryParse(txtSoLuong.Text, out int result))
+            {
+                if (result < 1)
+                    result = 1;
+
+                if (maxTonKho > 0 && result > maxTonKho)
+                    result = maxTonKho;
+
+                soLuongMua = result;
+
+                decimal thanhTien = soLuongMua * giaHienTai;
+                txtThanhTien.Text = thanhTien.ToString("#,##0") + "đ";
+            }
         }
     }
 }

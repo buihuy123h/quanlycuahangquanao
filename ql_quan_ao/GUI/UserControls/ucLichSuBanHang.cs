@@ -38,7 +38,7 @@ namespace ql_quan_ao.GUI.UserControls
         {
             try
             {
-                // 1. Gọi tầng BLL xử lý và lấy dữ liệu về (không cần quan tâm SQL viết như thế nào nữa)
+            
                 DataTable dt = hoaDonBUS.LayDanhSachHoaDonTheoThoiGian(dateTimePicker1.Value, dateTimePicker2.Value);
 
                 // 2. Ánh xạ cấu trúc cột hiển thị
@@ -47,10 +47,8 @@ namespace ql_quan_ao.GUI.UserControls
                 colTenKH.DataPropertyName = "TenKH";
                 colTongTien.DataPropertyName = "TongTien";
 
-                // 3. Đổ dữ liệu lên Grid
                 dgvLichSuBanHang.DataSource = dt;
-
-                // 4. Kiểm tra số lượng dòng để báo nếu trống
+                
                 if (dgvLichSuBanHang.Rows.Count == 0)
                 {
                     MessageBox.Show("Không tìm thấy hóa đơn nào trong khoảng thời gian này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -58,12 +56,10 @@ namespace ql_quan_ao.GUI.UserControls
             }
             catch (ArgumentException argEx)
             {
-                // Bắt riêng lỗi logic ngày tháng do tầng BLL ném ra
                 MessageBox.Show(argEx.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                // Bắt các lỗi hệ thống hoặc lỗi kết nối SQL từ tầng DAL truyền lên
                 MessageBox.Show("Đã xảy ra lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
